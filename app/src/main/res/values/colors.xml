@@ -9,6 +9,7 @@
 
     <!--Buttons-->
     <color name="button">#FFFFFF</color>
+    <color name="button_2">#3168EA</color>
     <color name="button_text">#3072B6</color>
     <color name="button_click">#68434DEB</color>
 

@@ -9,4 +9,14 @@
     <string name="welcome_title">Welcome</string>
     <string name="welcome_text">"blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla "</string>
     <string name="welcome_continue">Continue</string>
+    <string name="home_text">Select your audio file to process</string>
+    <string name="home_title">Upload File</string>
+    <string name="home_process">Process</string>
+    <string name="home_text_upload">Tap to upload a file</string>
+    <string name="file">File</string>
+    <string name="file_name_home">File Name</string>
+    <string name="file_size_home">File Size</string>
+    <string name="duration_home">Duration</string>
+    <string name="change_file_home">Change File</string>
+    <string name="empty">---</string>
 </resources>
