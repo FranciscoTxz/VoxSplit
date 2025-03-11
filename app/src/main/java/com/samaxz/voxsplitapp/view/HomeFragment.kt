@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.samaxz.voxsplitapp.databinding.FragmentHomeBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -20,10 +21,11 @@ import java.io.FileOutputStream
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var file: File
+    private lateinit var uriX: Uri
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
         binding.rlUploadFile.setOnClickListener {
@@ -31,6 +33,9 @@ class HomeFragment : Fragment() {
         }
         binding.btnChangeFile.setOnClickListener {
             selectAudio()
+        }
+        binding.btnProcess.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAudioFragment(file=uriX.toString()))
         }
         return binding.root
     }
@@ -56,6 +61,7 @@ class HomeFragment : Fragment() {
                     val duration = getAudioDuration(
                         uri, requireContext().contentResolver
                     ) / 1000
+                    uriX = uri
 
                     binding.rlUploadFile.visibility = View.GONE
                     binding.tvFileName.text = fileName
