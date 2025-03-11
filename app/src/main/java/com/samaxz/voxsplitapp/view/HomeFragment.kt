@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ContentResolver
 import android.content.Intent
 import android.media.MediaMetadataRetriever
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -11,23 +12,37 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.samaxz.voxsplitapp.databinding.FragmentHomeBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+import java.util.Locale
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var file: File
     private lateinit var uriX: Uri
+    private var mediaPlayer: MediaPlayer? = null
+    private lateinit var seekBar: SeekBar
+    private var updateJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.rlUploadFile.setOnClickListener {
             selectAudio()
         }
@@ -37,7 +52,12 @@ class HomeFragment : Fragment() {
         binding.btnProcess.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAudioFragment(file=uriX.toString()))
         }
-        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mediaPlayer?.release()
+        updateJob?.cancel()
     }
 
     private fun selectAudio() {
@@ -65,10 +85,12 @@ class HomeFragment : Fragment() {
 
                     binding.rlUploadFile.visibility = View.GONE
                     binding.tvFileName.text = fileName
-                    binding.tvFileSize.text = "%.2f MB".format(fileSize)
-                    binding.tvFileDuration.text = "%.2f S".format(duration.toDouble())
+                    binding.tvFileSize.text = String.format(Locale.US, "%.2f MB", fileSize)
+                    binding.tvFileDuration.text = String.format(Locale.US, "%.2f S", duration.toDouble())
                     binding.cvUploaded.visibility = View.VISIBLE
                     binding.btnProcess.visibility = View.VISIBLE
+
+                    updateMediaSeekBar()
                 }
             }
         }
@@ -122,5 +144,78 @@ class HomeFragment : Fragment() {
             }
         }
         return size
+    }
+
+    private fun updateMediaSeekBar(){
+        val playButton = binding.btnPlay
+        val pauseButton = binding.btnPause
+        seekBar = binding.seekBar
+
+        val fileUri: Uri = Uri.parse(uriX.toString())
+
+        try {
+            updateJob?.cancel()
+
+            mediaPlayer = MediaPlayer().apply {
+                setDataSource(requireContext(), fileUri)
+                prepare()
+            }
+
+            seekBar.max = mediaPlayer?.duration ?: 0
+
+            startSeekBarUpdate()
+
+            playButton.setOnClickListener {
+                mediaPlayer?.start()
+            }
+
+            pauseButton.setOnClickListener {
+                mediaPlayer?.pause()
+            }
+
+            seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+                    if (fromUser) {
+                        mediaPlayer?.seekTo(progress)
+                    }
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+            playButton.isEnabled = false
+            pauseButton.isEnabled = false
+            seekBar.isEnabled = false
+        }
+    }
+
+    private fun startSeekBarUpdate() {
+        updateJob?.cancel()
+
+        val duration = mediaPlayer?.duration ?: 0
+
+        updateJob = CoroutineScope(Dispatchers.Main).launch {
+            while (mediaPlayer != null) {
+                val currentPosition = mediaPlayer?.currentPosition ?: 0
+                val remainingTime = duration - currentPosition
+
+                binding.tvAudioStart.text = formatTime(currentPosition)
+                binding.tvAudioEnd.text = formatTime(remainingTime)
+                seekBar.progress = mediaPlayer?.currentPosition ?: 0
+                delay(500)
+            }
+        }
+    }
+
+    private fun formatTime(millis: Int): CharSequence {
+        val minutes = millis / 1000 / 60
+        val seconds = (millis / 1000) % 60
+        return String.format(Locale.US, "%02d:%02d", minutes, seconds)
     }
 }

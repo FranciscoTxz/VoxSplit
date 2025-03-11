@@ -12,6 +12,7 @@
     <color name="button_2">#3168EA</color>
     <color name="button_text">#3072B6</color>
     <color name="button_click">#68434DEB</color>
+    <color name="transparent">#00FFFFFF</color>
 
     <!--Text-->
     <color name="text_color">#FFFFFFFF</color>
