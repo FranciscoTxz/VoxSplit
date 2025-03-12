@@ -97,3 +97,4 @@ fastlane/screenshots/
 .vscode/
 /.gradle
 *.lock
+*.bin

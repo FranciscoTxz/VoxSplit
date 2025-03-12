@@ -7,7 +7,7 @@
     <string name="x3">Hello blank fragment</string>
     <string name="x4">Hello blank fragment</string>
     <string name="welcome_title">Welcome</string>
-    <string name="welcome_text">"blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla "</string>
+    <string name="welcome_text">"Turn your conversations into text with precision and automatically separate each speaker’s voice. Whether for interviews, meetings, or personal notes, VoxSplit helps you capture every word without missing a detail."</string>
     <string name="welcome_continue">Continue</string>
     <string name="home_text">Select your audio file to process</string>
     <string name="home_title">Upload File</string>
@@ -19,4 +19,5 @@
     <string name="duration_home">Duration</string>
     <string name="change_file_home">Change File</string>
     <string name="empty">---</string>
+    <string name="number_of_speakers">Number of speakers</string>
 </resources>

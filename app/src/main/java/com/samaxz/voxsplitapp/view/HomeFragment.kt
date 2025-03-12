@@ -1,5 +1,6 @@
 package com.samaxz.voxsplitapp.view
 
+import android.R
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Intent
@@ -12,7 +13,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -29,7 +33,6 @@ import java.util.Locale
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var file: File
-    private lateinit var uriX: Uri
     private var mediaPlayer: MediaPlayer? = null
     private lateinit var seekBar: SeekBar
     private var updateJob: Job? = null
@@ -48,9 +51,6 @@ class HomeFragment : Fragment() {
         }
         binding.btnChangeFile.setOnClickListener {
             selectAudio()
-        }
-        binding.btnProcess.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAudioFragment(file=uriX.toString()))
         }
     }
 
@@ -81,16 +81,32 @@ class HomeFragment : Fragment() {
                     val duration = getAudioDuration(
                         uri, requireContext().contentResolver
                     ) / 1000
-                    uriX = uri
 
                     binding.rlUploadFile.visibility = View.GONE
+                    binding.tvHomeText.visibility = View.GONE
+                    val items = listOf("1", "2", "3", "4", "?")
+                    val adapter = ArrayAdapter(binding.spinnerSpeakers.context, R.layout.simple_spinner_item, items)
+                    binding.spinnerSpeakers.adapter = adapter
                     binding.tvFileName.text = fileName
                     binding.tvFileSize.text = String.format(Locale.US, "%.2f MB", fileSize)
                     binding.tvFileDuration.text = String.format(Locale.US, "%.2f S", duration.toDouble())
                     binding.cvUploaded.visibility = View.VISIBLE
                     binding.btnProcess.visibility = View.VISIBLE
+                    binding.btnProcess.setOnClickListener {
+                        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAudioFragment(file=uri.toString()))
+                    }
 
-                    updateMediaSeekBar()
+                    binding.spinnerSpeakers.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                            val selectedOption = items[position]
+                            Toast.makeText(binding.spinnerSpeakers.context, "Seleccionaste: $selectedOption", Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                        }
+                    }
+
+                    updateMediaSeekBar(uri)
                 }
             }
         }
@@ -146,12 +162,12 @@ class HomeFragment : Fragment() {
         return size
     }
 
-    private fun updateMediaSeekBar(){
+    private fun updateMediaSeekBar(uri: Uri){
         val playButton = binding.btnPlay
         val pauseButton = binding.btnPause
         seekBar = binding.seekBar
 
-        val fileUri: Uri = Uri.parse(uriX.toString())
+        val fileUri: Uri = Uri.parse(uri.toString())
 
         try {
             updateJob?.cancel()
