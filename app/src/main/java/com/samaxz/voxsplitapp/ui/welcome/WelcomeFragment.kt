@@ -1,4 +1,4 @@
-package com.samaxz.voxsplitapp.view
+package com.samaxz.voxsplitapp.ui.welcome
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.samaxz.voxsplitapp.view
+package com.samaxz.voxsplitapp.ui.home
 
 import android.R
 import android.app.Activity

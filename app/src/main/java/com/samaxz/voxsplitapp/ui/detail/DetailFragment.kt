@@ -1,4 +1,4 @@
-package com.samaxz.voxsplitapp.view
+package com.samaxz.voxsplitapp.ui.detail
 
 import android.media.MediaPlayer
 import android.net.Uri
@@ -9,16 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.navigation.fragment.navArgs
-import com.samaxz.voxsplitapp.databinding.FragmentAudioBinding
+import com.samaxz.voxsplitapp.R
+import com.samaxz.voxsplitapp.databinding.FragmentDetailBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class AudioFragment : Fragment() {
-    private val args: AudioFragmentArgs by navArgs()
-    private lateinit var binding: FragmentAudioBinding
+class DetailFragment : Fragment() {
+
+    private lateinit var binding: FragmentDetailBinding
+    private val args: DetailFragmentArgs by navArgs()
     private var mediaPlayer: MediaPlayer? = null
     private lateinit var seekBar: SeekBar
     private var updateJob: Job? = null
@@ -27,7 +29,7 @@ class AudioFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAudioBinding.inflate(layoutInflater, container, false)
+        binding = FragmentDetailBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
