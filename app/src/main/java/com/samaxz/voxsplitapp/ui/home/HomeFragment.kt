@@ -1,5 +1,6 @@
 package com.samaxz.voxsplitapp.ui.home
 
+import android.R
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -7,7 +8,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -54,6 +58,18 @@ class HomeFragment : Fragment() {
                     file = uriX.toString()
                 )
             )
+        }
+        val items = listOf("1", "2", "3", "4", "?")
+        val adapter = ArrayAdapter(binding.spinnerSpeakers.context, R.layout.simple_spinner_item, items)
+        binding.spinnerSpeakers.adapter = adapter
+        binding.spinnerSpeakers.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedOption = items[position]
+                Toast.makeText(binding.spinnerSpeakers.context, "Seleccionaste: $selectedOption", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
         }
     }
 
