@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -147,8 +148,16 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.btnPlay.setOnClickListener { homeViewModel.playAudio() }
-        binding.btnPause.setOnClickListener { homeViewModel.pauseAudio() }
+        binding.btnPlay.setOnClickListener {
+            homeViewModel.playAudio()
+            binding.btnPlay.isVisible = false
+            binding.btnPause.isVisible = true
+        }
+        binding.btnPause.setOnClickListener {
+            homeViewModel.pauseAudio()
+            binding.btnPause.isVisible = false
+            binding.btnPlay.isVisible = true
+        }
     }
 
     private fun selectAudio() {

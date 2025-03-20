@@ -50,7 +50,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHomeText">
+        app:layout_constraintTop_toBottomOf="@+id/tvHomeText"
+        tools:visibility="gone">
 
         <LinearLayout
             android:layout_width="300dp"
@@ -86,7 +87,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btnProcess"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHomeText">
+        app:layout_constraintTop_toBottomOf="@+id/tvHomeText"
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -223,20 +225,23 @@
 
                     <ImageButton
                         android:id="@+id/btnPlay"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:backgroundTint="@color/transparent"
+                        android:contentDescription="@string/btn_play"
                         android:scaleType="fitXY"
                         android:src="@drawable/play"
                         app:tint="@color/background" />
 
                     <ImageButton
                         android:id="@+id/btnPause"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:backgroundTint="@color/transparent"
+                        android:contentDescription="@string/btn_pause"
                         android:scaleType="fitXY"
                         android:src="@drawable/pause"
+                        android:visibility="gone"
                         app:tint="@color/background" />
 
                 </LinearLayout>
@@ -277,16 +282,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/number_of_speakers"
                         android:textSize="18sp"
-                        android:textStyle="italic"
-                        android:text="@string/number_of_speakers"/>
+                        android:textStyle="italic" />
 
                     <Spinner
                         android:id="@+id/spinnerSpeakers"
@@ -320,8 +325,8 @@
         android:id="@+id/btnProcess"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginVertical="20dp"
         android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="20dp"
         android:backgroundTint="@color/button"
         android:text="@string/home_process"
         android:textAlignment="center"
@@ -329,11 +334,12 @@
         android:textSize="20sp"
         android:visibility="gone"
         app:cornerRadius="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/cvUploaded"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/button_click" />
+        app:layout_constraintTop_toBottomOf="@+id/cvUploaded"
+        app:rippleColor="@color/button_click"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

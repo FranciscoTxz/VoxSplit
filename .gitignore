@@ -98,3 +98,4 @@ fastlane/screenshots/
 /.gradle
 *.lock
 *.bin
+/.gradle

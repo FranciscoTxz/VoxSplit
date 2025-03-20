@@ -20,4 +20,6 @@
     <string name="change_file_home">Change File</string>
     <string name="empty">---</string>
     <string name="number_of_speakers">Number of speakers</string>
+    <string name="btn_play">Play Button</string>
+    <string name="btn_pause">Pause Button</string>
 </resources>
