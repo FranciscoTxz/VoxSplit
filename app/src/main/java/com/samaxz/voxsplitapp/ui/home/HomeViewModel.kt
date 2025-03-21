@@ -3,7 +3,6 @@ package com.samaxz.voxsplitapp.ui.home
 import android.content.ContentResolver
 import android.media.MediaPlayer
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samaxz.voxsplitapp.domain.model.AudioFileModel
@@ -16,7 +15,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.log
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -34,6 +32,9 @@ class HomeViewModel @Inject constructor(
     private var _progress = MutableStateFlow<Int>(0)
     val progress: StateFlow<Int> = _progress
 
+    private var _remainTime = MutableStateFlow<Int>(0)
+    val remainTime: StateFlow<Int> = _remainTime
+
     private var _mediaPlayer = MutableStateFlow<MediaPlayer?>(null)
     val mediaPlayer: StateFlow<MediaPlayer?> = _mediaPlayer
 
@@ -41,6 +42,7 @@ class HomeViewModel @Inject constructor(
         _allCool.value = true
         _audioFile.value = null
         _progress.value = 0
+        _remainTime.value = 0
         _mediaPlayer.value = null
     }
 
@@ -62,25 +64,26 @@ class HomeViewModel @Inject constructor(
                 }
             }
             _allCool.value = true
-            Log.i("SUPERSAMA", "CHIDO")
             _mediaPlayer.value?.start()
 
             updateSeekBar()
 
-        } catch(e : Exception){
-            Log.i("SUPERSAMA", "ERROR ESPERADO")
+        } catch (e: Exception) {
             _allCool.value = false
         }
     }
 
     fun pauseAudio() {
-        if (_allCool.value){ _mediaPlayer.value?.pause() }
+        if (_allCool.value) {
+            _mediaPlayer.value?.pause()
+        }
     }
 
     private fun updateSeekBar() {
         viewModelScope.launch {
             while (_mediaPlayer.value?.isPlaying == true) {
                 _progress.value = _mediaPlayer.value?.currentPosition ?: 0
+                _remainTime.value = (_mediaPlayer.value?.duration ?: 0) - _progress.value
                 delay(500)
             }
         }

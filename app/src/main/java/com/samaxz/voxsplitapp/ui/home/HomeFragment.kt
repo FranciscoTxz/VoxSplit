@@ -31,6 +31,7 @@ class HomeFragment : Fragment() {
     private val homeViewModel by viewModels<HomeViewModel>()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var uriX: Uri
+    private var duration: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -50,7 +51,10 @@ class HomeFragment : Fragment() {
             selectAudio()
         }
         binding.btnChangeFile.setOnClickListener {
+            homeViewModel.pauseAudio()
             homeViewModel.cleanData()
+            binding.btnPause.isVisible = false
+            binding.btnPlay.isVisible = true
             selectAudio()
         }
         binding.btnProcess.setOnClickListener {
@@ -61,17 +65,28 @@ class HomeFragment : Fragment() {
             )
         }
         val items = listOf("1", "2", "3", "4", "?")
-        val adapter = ArrayAdapter(binding.spinnerSpeakers.context, R.layout.simple_spinner_item, items)
+        val adapter =
+            ArrayAdapter(binding.spinnerSpeakers.context, R.layout.simple_spinner_item, items)
         binding.spinnerSpeakers.adapter = adapter
-        binding.spinnerSpeakers.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedOption = items[position]
-                Toast.makeText(binding.spinnerSpeakers.context, "Seleccionaste: $selectedOption", Toast.LENGTH_SHORT).show()
-            }
+        binding.spinnerSpeakers.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedOption = items[position]
+                    Toast.makeText(
+                        binding.spinnerSpeakers.context,
+                        "Seleccionaste: $selectedOption",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
             }
-        }
     }
 
 
@@ -83,6 +98,7 @@ class HomeFragment : Fragment() {
                         binding.rlUploadFile.visibility = View.GONE
                         binding.cvUploaded.visibility = View.VISIBLE
                         binding.btnProcess.visibility = View.VISIBLE
+                        binding.tvHomeText.isVisible = false
                     }
                     audioFile?.let {
                         binding.tvFileName.text = audioFile.name
@@ -102,8 +118,19 @@ class HomeFragment : Fragment() {
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                homeViewModel.progress.collect {
-                    binding.seekBar.progress = it
+                homeViewModel.progress.collect { progress ->
+
+                    binding.seekBar.progress = progress
+
+                    binding.tvAudioStart.text = formatTime(progress)
+
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.remainTime.collect { remainTime ->
+                    binding.tvAudioEnd.text = formatTime(remainTime)
                 }
             }
         }
@@ -111,7 +138,14 @@ class HomeFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.mediaPlayer.collect { mediaPlayer ->
                     if (mediaPlayer != null) {
+
+                        duration = mediaPlayer.duration
                         binding.seekBar.max = mediaPlayer.duration
+
+                        mediaPlayer.setOnCompletionListener {
+                            binding.btnPause.isVisible = false
+                            binding.btnPlay.isVisible = true
+                        }
 
                         binding.seekBar.setOnSeekBarChangeListener(object :
                             SeekBar.OnSeekBarChangeListener {
@@ -122,6 +156,9 @@ class HomeFragment : Fragment() {
                             ) {
                                 if (fromUser) {
                                     mediaPlayer.seekTo(progress)
+                                    binding.tvAudioStart.text = formatTime(progress)
+                                    binding.tvAudioEnd.text =
+                                        formatTime(mediaPlayer.duration - progress)
                                 }
                             }
 
@@ -139,6 +176,7 @@ class HomeFragment : Fragment() {
                         binding.btnPlay.isEnabled = false
                         binding.btnPause.isEnabled = false
                         binding.btnProcess.isEnabled = false
+                        //Show Dialog
                     } else {
                         binding.btnPlay.isEnabled = true
                         binding.btnPause.isEnabled = true
@@ -177,4 +215,10 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+    private fun formatTime(millis: Int): CharSequence {
+        val minutes = millis / 1000 / 60
+        val seconds = (millis / 1000) % 60
+        return String.format(Locale.US, "%02d:%02d", minutes, seconds)
+    }
 }

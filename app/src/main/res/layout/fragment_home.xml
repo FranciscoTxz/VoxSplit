@@ -36,7 +36,8 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHomeTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvHomeTitle"
+        tools:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/rlUploadFile"
@@ -62,6 +63,7 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:contentDescription="@string/click_here_and_select_your_audio"
                 android:src="@drawable/update_files"
                 app:tint="@color/text_color" />
 
@@ -98,7 +100,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -111,6 +113,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginVertical="20dp"
+                        android:contentDescription="@string/file_image"
                         android:src="@drawable/audio_file"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -257,7 +260,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -296,7 +299,8 @@
                     <Spinner
                         android:id="@+id/spinnerSpeakers"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="50dp"
+                        android:padding="15dp" />
                 </LinearLayout>
 
             </LinearLayout>

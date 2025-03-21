@@ -22,4 +22,7 @@
     <string name="number_of_speakers">Number of speakers</string>
     <string name="btn_play">Play Button</string>
     <string name="btn_pause">Pause Button</string>
+    <string name="click_here_and_select_your_audio">Click here and select your audio</string>
+    <string name="file_image">File image</string>
+    <string name="persons_with_a_document">Persons with a document</string>
 </resources>

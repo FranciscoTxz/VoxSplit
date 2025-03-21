@@ -41,6 +41,7 @@
         android:id="@+id/ivWelcome"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:contentDescription="@string/persons_with_a_document"
         android:src="@drawable/welcome"
         app:layout_constraintBottom_toTopOf="@id/btnWelcome"
         app:layout_constraintEnd_toEndOf="parent"
