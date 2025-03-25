@@ -85,6 +85,7 @@
         android:layout_height="500dp"
         android:gravity="center"
         android:visibility="gone"
+        app:cardBackgroundColor="@color/backgroundCard"
         app:cardCornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -292,17 +293,17 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
                         android:text="@string/number_of_speakers"
+                        android:textAlignment="center"
                         android:textSize="18sp"
                         android:textStyle="italic" />
 
                     <Spinner
                         android:id="@+id/spinnerSpeakers"
-                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
-                        android:padding="15dp" />
+                        android:padding="15dp"
+                        android:textAlignment="center" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -319,28 +320,29 @@
                     android:layout_height="50dp"
                     android:backgroundTint="@color/button_2"
                     android:text="@string/change_file_home"
+                    app:rippleColor="@color/white"
                     android:textColor="@color/text_color" />
 
                 <Space
                     android:layout_width="20dp"
-                    android:layout_height="0dp"/>
+                    android:layout_height="0dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnProcess"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/button_2"
+                    android:contentDescription="@string/home_process"
                     android:insetLeft="0dp"
-                    android:insetRight="0dp"
                     android:insetTop="0dp"
+                    android:insetRight="0dp"
                     android:insetBottom="0dp"
+                    android:padding="7dp"
                     app:cornerRadius="28dp"
                     app:icon="@drawable/ic_navigate_next"
                     app:iconSize="40dp"
                     app:iconTint="@color/white"
-                    android:padding="7dp"
-                    app:rippleColor="@color/white"
-                    android:contentDescription="Botón con ícono" />
+                    app:rippleColor="@color/white" />
 
 
             </LinearLayout>

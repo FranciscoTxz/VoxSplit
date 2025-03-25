@@ -6,6 +6,7 @@
     <!--Background-->
     <color name="my_light_primary">#3168EA</color>
     <color name="background">#3168EA</color>
+    <color name="backgroundCard">#FFFFFF</color>
 
     <!--Buttons-->
     <color name="button">#FFFFFF</color>

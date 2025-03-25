@@ -61,6 +61,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/button_click" />
+        app:rippleColor="@color/background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
