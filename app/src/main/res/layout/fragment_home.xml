@@ -7,7 +7,7 @@
     android:background="@color/background"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.welcome.WelcomeFragment">
+    tools:context=".ui.home.HomeFragment">
 
 
     <TextView
@@ -82,11 +82,11 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvUploaded"
         android:layout_width="350dp"
-        android:layout_height="450dp"
+        android:layout_height="500dp"
         android:gravity="center"
         android:visibility="gone"
         app:cardCornerRadius="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnProcess"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHomeText"
@@ -110,8 +110,8 @@
 
                     <ImageView
                         android:id="@+id/ivFile"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginVertical="20dp"
                         android:contentDescription="@string/file_image"
                         android:src="@drawable/audio_file"
@@ -260,7 +260,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -290,14 +290,16 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
+                        android:textAlignment="center"
                         android:text="@string/number_of_speakers"
                         android:textSize="18sp"
                         android:textStyle="italic" />
 
                     <Spinner
                         android:id="@+id/spinnerSpeakers"
+                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:padding="15dp" />
@@ -314,36 +316,38 @@
                 <Button
                     android:id="@+id/btnChangeFile"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:backgroundTint="@color/button_2"
                     android:text="@string/change_file_home"
                     android:textColor="@color/text_color" />
+
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="0dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnProcess"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/button_2"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    app:cornerRadius="28dp"
+                    app:icon="@drawable/ic_navigate_next"
+                    app:iconSize="40dp"
+                    app:iconTint="@color/white"
+                    android:padding="7dp"
+                    app:rippleColor="@color/white"
+                    android:contentDescription="Botón con ícono" />
+
 
             </LinearLayout>
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/btnProcess"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="20dp"
-        android:backgroundTint="@color/button"
-        android:text="@string/home_process"
-        android:textAlignment="center"
-        android:textColor="@color/button_text"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:cornerRadius="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvUploaded"
-        app:rippleColor="@color/button_click"
-        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

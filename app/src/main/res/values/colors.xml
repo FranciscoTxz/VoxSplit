@@ -16,4 +16,16 @@
 
     <!--Text-->
     <color name="text_color">#FFFFFFFF</color>
+
+    <!--Nav Bottom-->
+    <!--<color name="nav_bottom_background">#144FEB</color>
+    <color name="nav_button_selected">#FFFFFF</color>
+    <color name="nav_button_not_selected">#000000</color>-->
+
+    <!--Nav Bottom-->
+    <color name="nav_bottom_background">#FFFFFF</color>
+    <color name="nav_button_selected">#3168EA</color>
+    <color name="nav_button_not_selected">#000000</color>
+
+
 </resources>
