@@ -82,7 +82,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvUploaded"
         android:layout_width="350dp"
-        android:layout_height="500dp"
+        android:layout_height="520dp"
         android:gravity="center"
         android:visibility="gone"
         app:cardBackgroundColor="@color/backgroundCard"
@@ -295,6 +295,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/number_of_speakers"
                         android:textAlignment="center"
+                        android:textColor="@color/button_text"
                         android:textSize="18sp"
                         android:textStyle="italic" />
 
@@ -303,7 +304,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:padding="15dp"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -314,14 +316,15 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnChangeFile"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/button_2"
                     android:text="@string/change_file_home"
-                    app:rippleColor="@color/white"
-                    android:textColor="@color/text_color" />
+                    android:textColor="@color/text_color"
+                    app:cornerRadius="12dp"
+                    app:rippleColor="@color/white" />
 
                 <Space
                     android:layout_width="20dp"

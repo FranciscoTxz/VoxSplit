@@ -47,6 +47,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun setAudioFile(uri: Uri, contentResolver: ContentResolver) {
+        _mediaPlayer.value?.release()
         viewModelScope.launch {
             val file = convertUriToFileUseCase(uri, contentResolver)
             val name = getAudioNameUseCase(uri, contentResolver)
@@ -55,7 +56,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun playAudio() {
+    fun playAudio(showDialog: () -> Unit) {
         try {
             if (_mediaPlayer.value == null) {
                 _mediaPlayer.value = MediaPlayer().apply {
@@ -70,6 +71,8 @@ class HomeViewModel @Inject constructor(
 
         } catch (e: Exception) {
             _allCool.value = false
+            _mediaPlayer.value?.release()
+            showDialog()
         }
     }
 
@@ -93,4 +96,5 @@ class HomeViewModel @Inject constructor(
         super.onCleared()
         _mediaPlayer.value?.release()
     }
+
 }

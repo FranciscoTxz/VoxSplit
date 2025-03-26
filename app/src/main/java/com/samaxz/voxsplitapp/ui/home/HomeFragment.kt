@@ -2,6 +2,7 @@ package com.samaxz.voxsplitapp.ui.home
 
 import android.R
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,6 +22,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.samaxz.voxsplitapp.databinding.DialogErrorBinding
 import com.samaxz.voxsplitapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -58,6 +61,7 @@ class HomeFragment : Fragment() {
             selectAudio()
         }
         binding.btnProcess.setOnClickListener {
+            homeViewModel.pauseAudio()
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToAudioFragment(
                     file = uriX.toString()
@@ -67,6 +71,7 @@ class HomeFragment : Fragment() {
         val items = listOf("1", "2", "3", "4", "?")
         val adapter =
             ArrayAdapter(binding.spinnerSpeakers.context, R.layout.simple_spinner_item, items)
+        adapter.setDropDownViewResource(com.samaxz.voxsplitapp.R.layout.spinner_item)
         binding.spinnerSpeakers.adapter = adapter
         binding.spinnerSpeakers.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -79,7 +84,7 @@ class HomeFragment : Fragment() {
                     val selectedOption = items[position]
                     Toast.makeText(
                         binding.spinnerSpeakers.context,
-                        "Seleccionaste: $selectedOption",
+                        "Speakers: $selectedOption",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -187,7 +192,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnPlay.setOnClickListener {
-            homeViewModel.playAudio()
+            homeViewModel.playAudio { showDialog() }
             binding.btnPlay.isVisible = false
             binding.btnPause.isVisible = true
         }
@@ -216,9 +221,27 @@ class HomeFragment : Fragment() {
             }
         }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        homeViewModel.cleanData()
+    }
+
     private fun formatTime(millis: Int): CharSequence {
         val minutes = millis / 1000 / 60
         val seconds = (millis / 1000) % 60
         return String.format(Locale.US, "%02d:%02d", minutes, seconds)
+    }
+
+    private fun showDialog() {
+        val dialog = Dialog(requireContext())
+        val bindingDialog = DialogErrorBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(bindingDialog.root)
+
+        val btnContinue: Button = bindingDialog.btnContinue
+        btnContinue.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 }

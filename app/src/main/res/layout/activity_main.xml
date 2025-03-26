@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvWelcomeText" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnWelcome"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -61,6 +61,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/background" />
+        app:rippleColor="@color/button_click_welcome" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
