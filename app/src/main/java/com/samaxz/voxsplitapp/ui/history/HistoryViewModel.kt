@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val getHistoryUseCase: GetHistoryUseCase,
+    private val getHistoryUseCase: GetHistoryUseCase
 ) :
     ViewModel() {
 
@@ -31,6 +31,15 @@ class HistoryViewModel @Inject constructor(
 //            } else {
 //                _history.value = horoscopeProvider.getHistory2()
 //            }
+            _history.value = result
+            _isLoading.value = false
+        }
+    }
+
+    fun updateList(){
+        viewModelScope.launch {
+            _isLoading.value = true
+            val result = getHistoryUseCase()
             _history.value = result
             _isLoading.value = false
         }

@@ -6,9 +6,11 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samaxz.voxsplitapp.domain.model.AudioFileModel
+import com.samaxz.voxsplitapp.domain.model.HistoryInfo
 import com.samaxz.voxsplitapp.domain.usecase.ConvertUriToFileUseCase
 import com.samaxz.voxsplitapp.domain.usecase.GetAudioMetadataUseCase
 import com.samaxz.voxsplitapp.domain.usecase.GetAudioNameUseCase
+import com.samaxz.voxsplitapp.domain.usecase.PostNewHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +23,7 @@ class HomeViewModel @Inject constructor(
     private val getAudioMetadataUseCase: GetAudioMetadataUseCase,
     private val convertUriToFileUseCase: ConvertUriToFileUseCase,
     private val getAudioNameUseCase: GetAudioNameUseCase,
+    private val postNewHistory: PostNewHistoryUseCase
 ) : ViewModel() {
 
     private var _audioFile = MutableStateFlow<AudioFileModel?>(null)
@@ -37,6 +40,12 @@ class HomeViewModel @Inject constructor(
 
     private var _mediaPlayer = MutableStateFlow<MediaPlayer?>(null)
     val mediaPlayer: StateFlow<MediaPlayer?> = _mediaPlayer
+
+    fun uploadToRoom(historyInfo: HistoryInfo){
+        viewModelScope.launch {
+            postNewHistory(historyInfo)
+        }
+    }
 
     fun cleanData() {
         _allCool.value = true

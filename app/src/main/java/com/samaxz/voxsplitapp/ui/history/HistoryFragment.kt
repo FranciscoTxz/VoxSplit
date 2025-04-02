@@ -50,10 +50,10 @@ class HistoryFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 historyViewModel.history.collect { list ->
-                    if (list.isEmpty()){
+                    if (list.isEmpty()) {
                         binding.tvEmptyText.isVisible = true
-                    }
-                    else {
+                    } else {
+                        binding.tvEmptyText.isVisible = false
                         historyAdapter.updateList(list)
                     }
                 }
@@ -73,6 +73,11 @@ class HistoryFragment : Fragment() {
     ): View? {
         _binding = FragmentHistoryBinding.inflate(layoutInflater, container, false)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        historyViewModel.updateList()
     }
 
 }

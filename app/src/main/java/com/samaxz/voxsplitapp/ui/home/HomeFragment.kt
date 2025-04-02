@@ -24,6 +24,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.samaxz.voxsplitapp.databinding.DialogErrorBinding
 import com.samaxz.voxsplitapp.databinding.FragmentHomeBinding
+import com.samaxz.voxsplitapp.domain.model.HistoryInfo
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -37,6 +38,10 @@ class HomeFragment : Fragment() {
     private lateinit var uriX: Uri
     private var duration: Int? = null
 
+    private lateinit var nameFile: String
+    private lateinit var sizeFile: String
+    private lateinit var durationFile: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -47,10 +52,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
-        initUIState()
     }
 
     private fun initUI() {
+        initUiListeners()
+        initUIState()
+    }
+
+    private fun initUiListeners() {
         binding.rlUploadFile.setOnClickListener {
             selectAudio()
         }
@@ -63,6 +72,13 @@ class HomeFragment : Fragment() {
         }
         binding.btnProcess.setOnClickListener {
             homeViewModel.pauseAudio()
+            // Save in ROOM
+            homeViewModel.uploadToRoom(
+                HistoryInfo(
+                    name = nameFile,
+                    description = "$sizeFile --- $durationFile Text: Hellllloooowwwww world, my first DATA in ROOM"
+                )
+            )
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToAudioFragment(
                     file = uriX.toString()
@@ -107,17 +123,20 @@ class HomeFragment : Fragment() {
                         binding.tvHomeText.isVisible = false
                     }
                     audioFile?.let {
-                        binding.tvFileName.text = audioFile.name
-                        binding.tvFileSize.text = String.format(
-                            Locale.US,
-                            "%.2f MB",
-                            (audioFile.metadataModel.size.toFloat() / (1024.0 * 1024.0))
-                        )
-                        binding.tvFileDuration.text = String.format(
+                        nameFile = audioFile.name
+                        durationFile = String.format(
                             Locale.US,
                             "%.2f S",
                             (audioFile.metadataModel.duration.toFloat() / 1000)
                         )
+                        sizeFile = String.format(
+                            Locale.US,
+                            "%.2f MB",
+                            (audioFile.metadataModel.size.toFloat() / (1024.0 * 1024.0))
+                        )
+                        binding.tvFileName.text = nameFile
+                        binding.tvFileSize.text = sizeFile
+                        binding.tvFileDuration.text = durationFile
                     }
                 }
             }
@@ -125,9 +144,7 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.progress.collect { progress ->
-
                     binding.seekBar.progress = progress
-
                     binding.tvAudioStart.text = formatTime(progress)
 
                 }
