@@ -20,7 +20,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
-    private lateinit var binding: FragmentDetailBinding
+    private var _binding: FragmentDetailBinding? = null
+    private val binding get() = _binding!!
     private val args: DetailFragmentArgs by navArgs()
     private var mediaPlayer: MediaPlayer? = null
     private lateinit var seekBar: SeekBar
@@ -30,7 +31,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDetailBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentDetailBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

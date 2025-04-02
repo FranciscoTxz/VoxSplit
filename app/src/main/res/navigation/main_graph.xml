@@ -28,4 +28,9 @@
             app:argType="string"
             android:defaultValue="---" />
     </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.samaxz.voxsplitapp.ui.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>

@@ -32,14 +32,15 @@ import java.util.Locale
 class HomeFragment : Fragment() {
 
     private val homeViewModel by viewModels<HomeViewModel>()
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     private lateinit var uriX: Uri
     private var duration: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

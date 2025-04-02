@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/navigate_next/baseline_navigate_next_24.xml" />
+                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/history/baseline_history_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,7 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_navigate_next" />
+                            <entry key="outputName" value="ic_history" />
                             <entry key="sourceFile" value="$USER_HOME$/Downloads/upload-file-2-svgrepo-com.svg" />
                           </map>
                         </option>

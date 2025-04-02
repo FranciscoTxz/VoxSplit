@@ -26,7 +26,19 @@
     <string name="file_image">File image</string>
     <string name="persons_with_a_document">Persons with a document</string>
     <string name="uploadAudio">Upload Audio</string>
+    <string name="history">History</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_warning">Warning</string>
     <string name="dialog_body_text">This audio does not have previous playback, it may have issues during processing.</string>
+
+
+
+
+<!--  Examples -->}
+    <string name="one">One</string>
+    <string name="one_desc">One.5</string>
+    <string name="two">Warning</string>
+    <string name="two_desc">Warning.5</string>
+    <string name="three">Warning2</string>
+    <string name="three_desc">Warning2.5</string>
 </resources>

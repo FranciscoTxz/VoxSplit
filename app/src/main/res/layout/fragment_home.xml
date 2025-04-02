@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
+        android:fontFamily="@font/inter"
         android:text="@string/home_title"
         android:textColor="@color/text_color"
         android:textSize="30sp"
@@ -27,6 +28,7 @@
         android:id="@+id/tvHomeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/rubik"
         android:paddingHorizontal="30dp"
         android:paddingVertical="30dp"
         android:text="@string/home_text"
@@ -71,11 +73,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/rubik"
                 android:gravity="center"
                 android:text="@string/home_text_upload"
                 android:textColor="@color/text_color"
                 android:textSize="25sp"
-                android:textStyle="italic" />
+                android:textStyle="normal" />
         </LinearLayout>
     </RelativeLayout>
 
