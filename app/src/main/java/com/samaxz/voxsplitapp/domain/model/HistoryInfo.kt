@@ -1,10 +1,9 @@
 package com.samaxz.voxsplitapp.domain.model
 
-import com.samaxz.voxsplitapp.R
-import kotlinx.coroutines.internal.OpDescriptor
+import com.samaxz.voxsplitapp.data.database.entities.HistoryEntity
+import com.samaxz.voxsplitapp.data.model.HistoryModel
 
-sealed class HistoryInfo(val name: Int, val description: Int) {
-    data object One : HistoryInfo(R.string.one, R.string.one_desc)
-    data object Two : HistoryInfo(R.string.two, R.string.two_desc)
-    data object Three : HistoryInfo(R.string.three, R.string.three_desc)
-}
+data class HistoryInfo(val name: String, val description: String)
+
+fun HistoryModel.toDomain() = HistoryInfo(name, description)
+fun HistoryEntity.toDomain() = HistoryInfo(name, description)

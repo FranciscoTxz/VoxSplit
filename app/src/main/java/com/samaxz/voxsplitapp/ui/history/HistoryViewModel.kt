@@ -1,22 +1,38 @@
 package com.samaxz.voxsplitapp.ui.history
 
 import androidx.lifecycle.ViewModel
-import com.samaxz.voxsplitapp.data.providers.HistoryProvider
+import androidx.lifecycle.viewModelScope
 import com.samaxz.voxsplitapp.domain.model.HistoryInfo
+import com.samaxz.voxsplitapp.domain.usecase.GetHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HistoryViewModel @Inject constructor(horoscopeProvider: HistoryProvider) :
+class HistoryViewModel @Inject constructor(
+    private val getHistoryUseCase: GetHistoryUseCase,
+) :
     ViewModel() {
 
-    //Its a flow than can only by called by the horoscope state flow that is not mutable
     private var _history = MutableStateFlow<List<HistoryInfo>>(emptyList())
     val history: StateFlow<List<HistoryInfo>> = _history
 
+    private var _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     init {
-        _history.value = horoscopeProvider.getHistory()
+        viewModelScope.launch {
+            _isLoading.value = true
+            val result = getHistoryUseCase()
+//            if (!result.isNullOrEmpty()) {
+//                _history.value = result
+//            } else {
+//                _history.value = horoscopeProvider.getHistory2()
+//            }
+            _history.value = result
+            _isLoading.value = false
+        }
     }
 }

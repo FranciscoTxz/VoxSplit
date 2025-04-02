@@ -66,4 +66,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Gson
+    implementation(libs.gsonx)
+
+    // ROOM -> Local DB
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 }

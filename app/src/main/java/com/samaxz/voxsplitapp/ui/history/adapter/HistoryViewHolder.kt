@@ -9,9 +9,8 @@ import com.samaxz.voxsplitapp.domain.model.HistoryInfo
 class HistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding = HistoryItemBinding.bind(view)
     fun render(historyInfo: HistoryInfo, onItemSelected: (HistoryInfo) -> Unit) {
-        val context = binding.tvName.context
-        binding.tvName.text = context.getString(historyInfo.name)
-        binding.tvDescription.text = context.getString(historyInfo.description)
+        binding.tvName.text = historyInfo.name
+        binding.tvDescription.text = historyInfo.description
 
         binding.parent.setOnClickListener {
             startRotationAnimation(

@@ -41,4 +41,5 @@
     <string name="two_desc">Warning.5</string>
     <string name="three">Warning2</string>
     <string name="three_desc">Warning2.5</string>
+    <string name="empty_text">Here we will show you your transcript history</string>
 </resources>

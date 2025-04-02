@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.samaxz.voxsplitapp.databinding.FragmentHistoryBinding
-import com.samaxz.voxsplitapp.domain.model.HistoryInfo
 import com.samaxz.voxsplitapp.ui.history.adapter.HistoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ class HistoryFragment : Fragment() {
 
     private fun initList() {
         historyAdapter = HistoryAdapter(onItemSelected = {
-            Log.i("SUPERSAMA", "${it}")
+            Log.i("SUPERSAMA", it.name)
         })
         binding.rvHistory.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -50,7 +50,19 @@ class HistoryFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 historyViewModel.history.collect { list ->
-                    historyAdapter.updateList(list)
+                    if (list.isEmpty()){
+                        binding.tvEmptyText.isVisible = true
+                    }
+                    else {
+                        historyAdapter.updateList(list)
+                    }
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                historyViewModel.isLoading.collect { value ->
+                    binding.pbLoading.isVisible = value
                 }
             }
         }
