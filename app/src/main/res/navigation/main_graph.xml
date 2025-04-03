@@ -27,6 +27,10 @@
             android:name="file"
             app:argType="string"
             android:defaultValue="---" />
+        <argument
+            android:name="speakers"
+            app:argType="integer"
+            android:defaultValue="2" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"

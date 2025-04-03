@@ -13,7 +13,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -38,9 +37,10 @@ class HomeFragment : Fragment() {
     private lateinit var uriX: Uri
     private var duration: Int? = null
 
-    private lateinit var nameFile: String
-    private lateinit var sizeFile: String
-    private lateinit var durationFile: String
+    private lateinit var fileName: String
+    private lateinit var fileSize: String
+    private lateinit var fileDuration: String
+    private var speakers: Int = 2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -75,17 +75,18 @@ class HomeFragment : Fragment() {
             // Save in ROOM
             homeViewModel.uploadToRoom(
                 HistoryInfo(
-                    name = nameFile,
-                    description = "$sizeFile --- $durationFile Text: Hellllloooowwwww world, my first DATA in ROOM"
+                    name = fileName,
+                    description = "$fileSize --- $fileDuration Text: Hellllloooowwwww world, my first DATA in ROOM"
                 )
             )
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToAudioFragment(
-                    file = uriX.toString()
+                    file = uriX.toString(),
+                    speakers = speakers
                 )
             )
         }
-        val items = listOf("1", "2", "3", "4", "?")
+        val items = listOf("1", "2", "3", "4")
         val adapter =
             ArrayAdapter(binding.spinnerSpeakers.context, R.layout.simple_spinner_item, items)
         adapter.setDropDownViewResource(com.samaxz.voxsplitapp.R.layout.spinner_item)
@@ -98,12 +99,7 @@ class HomeFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    val selectedOption = items[position]
-                    Toast.makeText(
-                        binding.spinnerSpeakers.context,
-                        "Speakers: $selectedOption",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    speakers = (items[position]).toInt()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -123,20 +119,20 @@ class HomeFragment : Fragment() {
                         binding.tvHomeText.isVisible = false
                     }
                     audioFile?.let {
-                        nameFile = audioFile.name
-                        durationFile = String.format(
+                        fileName = audioFile.name
+                        fileDuration = String.format(
                             Locale.US,
                             "%.2f S",
                             (audioFile.metadataModel.duration.toFloat() / 1000)
                         )
-                        sizeFile = String.format(
+                        fileSize = String.format(
                             Locale.US,
                             "%.2f MB",
                             (audioFile.metadataModel.size.toFloat() / (1024.0 * 1024.0))
                         )
-                        binding.tvFileName.text = nameFile
-                        binding.tvFileSize.text = sizeFile
-                        binding.tvFileDuration.text = durationFile
+                        binding.tvFileName.text = fileName
+                        binding.tvFileSize.text = fileSize
+                        binding.tvFileDuration.text = fileDuration
                     }
                 }
             }

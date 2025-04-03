@@ -27,23 +27,18 @@ class DetailFragment : Fragment() {
     private lateinit var seekBar: SeekBar
     private var updateJob: Job? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDetailBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val uriString = args.file
+        val speakers = args.speakers
 
         val playButton = binding.playButton
         val pauseButton = binding.pauseButton
         seekBar = binding.seekBar
 
         val fileUri: Uri = Uri.parse(uriString)
+
+        binding.tvSpeakers.text = "Speakers: $speakers"
 
         try {
             updateJob?.cancel()
@@ -103,5 +98,13 @@ class DetailFragment : Fragment() {
         super.onDestroyView()
         mediaPlayer?.release()
         updateJob?.cancel()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentDetailBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 }
