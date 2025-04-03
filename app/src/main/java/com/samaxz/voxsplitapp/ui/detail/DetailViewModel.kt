@@ -10,7 +10,7 @@ import com.samaxz.voxsplitapp.domain.model.ResultInfo
 import com.samaxz.voxsplitapp.domain.usecase.ConvertUriToFileUseCase
 import com.samaxz.voxsplitapp.domain.usecase.GetAudioMetadataUseCase
 import com.samaxz.voxsplitapp.domain.usecase.GetAudioNameUseCase
-import com.samaxz.voxsplitapp.domain.usecase.POSTResultUseCase
+import com.samaxz.voxsplitapp.domain.usecase.PostResultUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val postResultUseCase: POSTResultUseCase,
+    private val postResultUseCase: PostResultUseCase,
     private val getAudioMetadataUseCase: GetAudioMetadataUseCase,
     private val convertUriToFileUseCase: ConvertUriToFileUseCase,
     private val getAudioNameUseCase: GetAudioNameUseCase,
