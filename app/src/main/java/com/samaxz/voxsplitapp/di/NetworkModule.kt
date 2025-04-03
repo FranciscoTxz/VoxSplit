@@ -1,7 +1,6 @@
-/*
-package com.samaxz.examplemvvm.di
+package com.samaxz.voxsplitapp.di
 
-import com.samaxz.examplemvvm.data.network.QuoteApiClient
+import com.samaxz.voxsplitapp.data.network.ResultApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,15 +17,15 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://drawsomething-59328-default-rtdb.europe-west1.firebasedatabase.app/")
+            .baseUrl("https://voxvox2.free.beeceptor.com/progress")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideQuoteApiClient(retrofit: Retrofit): QuoteApiClient{
-        return retrofit.create(QuoteApiClient::class.java)
+    fun provideQuoteApiClient(retrofit: Retrofit): ResultApiClient {
+        return retrofit.create(ResultApiClient::class.java)
 
     }
-}*/
+}

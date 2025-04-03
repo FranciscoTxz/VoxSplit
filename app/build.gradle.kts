@@ -73,4 +73,8 @@ dependencies {
     // ROOM -> Local DB
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation (libs.converter.gson)
 }

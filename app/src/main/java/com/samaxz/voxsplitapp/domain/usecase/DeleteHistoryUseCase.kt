@@ -1,9 +1,9 @@
 package com.samaxz.voxsplitapp.domain.usecase
 
-import com.samaxz.voxsplitapp.data.HistoryRepository
+import com.samaxz.voxsplitapp.data.APIDBRepository
 import javax.inject.Inject
 
-class DeleteHistoryUseCase @Inject constructor(private val repository: HistoryRepository) {
+class DeleteHistoryUseCase @Inject constructor(private val repository: APIDBRepository) {
     suspend operator fun invoke() {
         repository.clearHistory()
     }
