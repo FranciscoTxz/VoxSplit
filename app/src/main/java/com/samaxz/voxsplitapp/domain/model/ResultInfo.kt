@@ -6,8 +6,8 @@ import com.samaxz.voxsplitapp.data.model.Word
 
 data class ResultInfo(
     val text: String,
-    val error: String,
-    val segments: List<SegmentD>
+    val segments: List<SegmentD>,
+    val language: String
 )
 
 data class SegmentD(
@@ -17,7 +17,7 @@ data class SegmentD(
     val text: String,
     val words: List<WordD>,
     val prob: List<String>,
-    val overlapp: String
+    val overlapp: Boolean? = null
 )
 
 data class WordD(
@@ -29,8 +29,8 @@ data class WordD(
 
 fun ResultModel.toDomain() = ResultInfo(
     text = this.text,
-    error = this.error,
-    segments = this.segments.map { it.toDomain() }
+    segments = this.segments.map { it.toDomain() },
+    language = this.language
 )
 
 fun Segment.toDomain() = SegmentD(

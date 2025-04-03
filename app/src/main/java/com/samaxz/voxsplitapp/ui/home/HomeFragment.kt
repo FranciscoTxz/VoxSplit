@@ -105,6 +105,16 @@ class HomeFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
             }
+        binding.btnPlay.setOnClickListener {
+            homeViewModel.playAudio { showDialog() }
+            binding.btnPlay.isVisible = false
+            binding.btnPause.isVisible = true
+        }
+        binding.btnPause.setOnClickListener {
+            homeViewModel.pauseAudio()
+            binding.btnPause.isVisible = false
+            binding.btnPlay.isVisible = true
+        }
     }
 
 
@@ -203,17 +213,6 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-        }
-
-        binding.btnPlay.setOnClickListener {
-            homeViewModel.playAudio { showDialog() }
-            binding.btnPlay.isVisible = false
-            binding.btnPause.isVisible = true
-        }
-        binding.btnPause.setOnClickListener {
-            homeViewModel.pauseAudio()
-            binding.btnPause.isVisible = false
-            binding.btnPlay.isVisible = true
         }
     }
 

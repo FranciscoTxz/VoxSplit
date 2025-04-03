@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class ResultModel(
     @SerializedName("text") val text: String,
-    @SerializedName("error") val error: String,
-    @SerializedName("segments") val segments: List<Segment>
+    @SerializedName("segments") val segments: List<Segment>,
+    @SerializedName("language") val language: String
 )
 
 data class Segment(
@@ -15,7 +15,7 @@ data class Segment(
     @SerializedName("text") val text: String,
     @SerializedName("words") val words: List<Word>,
     @SerializedName("prob") val prob: List<String>,
-    @SerializedName("overlapp") val overlapp: String
+    @SerializedName("overlapp") val overlapp: Boolean? = null
 )
 
 data class Word(
