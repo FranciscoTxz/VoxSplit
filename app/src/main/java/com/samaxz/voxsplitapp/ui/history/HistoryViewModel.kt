@@ -3,6 +3,7 @@ package com.samaxz.voxsplitapp.ui.history
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samaxz.voxsplitapp.domain.model.HistoryInfo
+import com.samaxz.voxsplitapp.domain.usecase.DeleteHistoryUseCase
 import com.samaxz.voxsplitapp.domain.usecase.GetHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val getHistoryUseCase: GetHistoryUseCase
+    private val getHistoryUseCase: GetHistoryUseCase,
+    private val deleteHistoryUseCase: DeleteHistoryUseCase
 ) :
     ViewModel() {
 
@@ -26,19 +28,24 @@ class HistoryViewModel @Inject constructor(
         viewModelScope.launch {
             _isLoading.value = true
             val result = getHistoryUseCase()
-//            if (!result.isNullOrEmpty()) {
-//                _history.value = result
-//            } else {
-//                _history.value = horoscopeProvider.getHistory2()
-//            }
             _history.value = result
             _isLoading.value = false
         }
     }
 
-    fun updateList(){
+    fun updateList() {
         viewModelScope.launch {
             _isLoading.value = true
+            val result = getHistoryUseCase()
+            _history.value = result
+            _isLoading.value = false
+        }
+    }
+
+    fun deleteHistory() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            deleteHistoryUseCase()
             val result = getHistoryUseCase()
             _history.value = result
             _isLoading.value = false

@@ -33,7 +33,14 @@ class HistoryFragment : Fragment() {
 
     private fun initUI() {
         initList()
+        initListeners()
         initUIState()
+    }
+
+    private fun initListeners() {
+        binding.faBtnDelete.setOnClickListener {
+            historyViewModel.deleteHistory()
+        }
     }
 
     private fun initList() {
@@ -51,10 +58,12 @@ class HistoryFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 historyViewModel.history.collect { list ->
                     if (list.isEmpty()) {
+                        binding.rvHistory.isVisible = false
                         binding.tvEmptyText.isVisible = true
                     } else {
                         binding.tvEmptyText.isVisible = false
                         historyAdapter.updateList(list)
+                        binding.rvHistory.isVisible = true
                     }
                 }
             }

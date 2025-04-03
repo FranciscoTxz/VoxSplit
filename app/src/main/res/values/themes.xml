@@ -9,8 +9,12 @@
     <style name="Theme.VoxSplitApp" parent="Base.Theme.VoxSplitApp" />
 
     <!-- Estilo para el texto del BottomNavigationView -->
-    <style name="BottomNavTextAppearance" parent="TextAppearance.MaterialComponents.Body1">
+    <style name="BottomNavTextAppearanceOn" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textSize">16sp</item> <!-- Tamaño del texto -->
+        <!--<item name="android:fontFamily">@font/roboto</item> &lt;!&ndash; Fuente opcional &ndash;&gt;-->
+    </style>
+    <style name="BottomNavTextAppearanceOff" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">14sp</item> <!-- Tamaño del texto -->
         <!--<item name="android:fontFamily">@font/roboto</item> &lt;!&ndash; Fuente opcional &ndash;&gt;-->
     </style>
 

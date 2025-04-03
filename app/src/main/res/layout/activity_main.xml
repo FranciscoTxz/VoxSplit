@@ -27,11 +27,13 @@
         android:id="@+id/tvWelcomeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:justificationMode="inter_word"
         android:fontFamily="@font/rubik"
         android:paddingHorizontal="30dp"
         android:paddingVertical="30dp"
         android:text="@string/welcome_text"
         android:textAlignment="center"
+
         android:textColor="@color/text_color"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
