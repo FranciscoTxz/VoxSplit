@@ -52,12 +52,13 @@ class DetailFragment : Fragment() {
         }
 
         val uriString = args.file
+        val language = args.language
         val speakers = args.speakers
 
         val fileUri: Uri = Uri.parse(uriString)
 
         binding.btnSendRequest.setOnClickListener {
-            detailViewModel.getResult(fileUri, speakers, requireContext().contentResolver)
+            detailViewModel.getResult(fileUri, speakers, language, requireContext().contentResolver)
         }
     }
 

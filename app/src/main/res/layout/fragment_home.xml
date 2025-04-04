@@ -299,16 +299,24 @@
                         android:text="@string/number_of_speakers"
                         android:textAlignment="center"
                         android:textColor="@color/button_text"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="italic" />
 
                     <Spinner
                         android:id="@+id/spinnerSpeakers"
-                        android:layout_width="wrap_content"
+                        android:layout_width="90dp"
                         android:layout_height="50dp"
-                        android:padding="15dp"
-                        android:textAlignment="center"
-                        android:textSize="18sp" />
+                        android:padding="5dp"
+                        android:textAlignment="textStart"
+                        android:textSize="14sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerLanguage"
+                        android:layout_width="90dp"
+                        android:layout_height="50dp"
+                        android:padding="5dp"
+                        android:textAlignment="textStart"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
             </LinearLayout>

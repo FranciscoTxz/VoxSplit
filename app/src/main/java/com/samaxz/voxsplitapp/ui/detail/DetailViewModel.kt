@@ -44,11 +44,11 @@ class DetailViewModel @Inject constructor(
     private var _result = MutableStateFlow<ResultInfo?>(null)
     val result: StateFlow<ResultInfo?> = _result
 
-    fun getResult(uri: Uri, speakers: Int, contentResolver: ContentResolver) {
+    fun getResult(uri: Uri, speakers: Int, language: String, contentResolver: ContentResolver) {
         viewModelScope.launch {
             _result.value = postResultUseCase(
-                speakers,
-                language = "es",
+                speakers = speakers,
+                language = language,
                 file = convertUriToFileUseCase(uri, contentResolver)
             )
         }

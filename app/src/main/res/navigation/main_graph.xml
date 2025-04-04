@@ -31,6 +31,10 @@
             android:name="speakers"
             app:argType="integer"
             android:defaultValue="2" />
+        <argument
+            android:name="language"
+            app:argType="string"
+            android:defaultValue="en" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"

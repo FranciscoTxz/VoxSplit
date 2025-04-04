@@ -41,6 +41,7 @@ class HomeFragment : Fragment() {
     private lateinit var fileSize: String
     private lateinit var fileDuration: String
     private var speakers: Int = 2
+    private var language: String = "en"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -82,6 +83,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToAudioFragment(
                     file = uriX.toString(),
+                    language = language,
                     speakers = speakers
                 )
             )
@@ -105,6 +107,30 @@ class HomeFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
             }
+
+        val itemsLanguage = listOf("en", "es")
+        val adapterLanguage =
+            ArrayAdapter(
+                binding.spinnerLanguage.context,
+                R.layout.simple_spinner_item,
+                itemsLanguage
+            )
+        adapterLanguage.setDropDownViewResource(com.samaxz.voxsplitapp.R.layout.spinner_item)
+        binding.spinnerLanguage.adapter = adapterLanguage
+        binding.spinnerLanguage.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    language = (itemsLanguage[position])
+                }
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+            }
+
         binding.btnPlay.setOnClickListener {
             homeViewModel.playAudio { showDialog() }
             binding.btnPlay.isVisible = false
