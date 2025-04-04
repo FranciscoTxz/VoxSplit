@@ -12,10 +12,12 @@ import com.samaxz.voxsplitapp.domain.usecase.GetAudioMetadataUseCase
 import com.samaxz.voxsplitapp.domain.usecase.GetAudioNameUseCase
 import com.samaxz.voxsplitapp.domain.usecase.PostNewHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,9 +43,11 @@ class HomeViewModel @Inject constructor(
     private var _mediaPlayer = MutableStateFlow<MediaPlayer?>(null)
     val mediaPlayer: StateFlow<MediaPlayer?> = _mediaPlayer
 
-    fun uploadToRoom(historyInfo: HistoryInfo){
+    fun uploadToRoom(historyInfo: HistoryInfo) {
         viewModelScope.launch {
-            postNewHistory(historyInfo)
+            val data = withContext(Dispatchers.IO) {
+                postNewHistory(historyInfo)
+            }
         }
     }
 

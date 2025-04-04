@@ -12,10 +12,12 @@ import com.samaxz.voxsplitapp.domain.usecase.GetAudioMetadataUseCase
 import com.samaxz.voxsplitapp.domain.usecase.GetAudioNameUseCase
 import com.samaxz.voxsplitapp.domain.usecase.PostResultUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,11 +48,13 @@ class DetailViewModel @Inject constructor(
 
     fun getResult(uri: Uri, speakers: Int, language: String, contentResolver: ContentResolver) {
         viewModelScope.launch {
-            _result.value = postResultUseCase(
-                speakers = speakers,
-                language = language,
-                file = convertUriToFileUseCase(uri, contentResolver)
-            )
+            val data = withContext(Dispatchers.IO) {
+                _result.value = postResultUseCase(
+                    speakers = speakers,
+                    language = language,
+                    file = convertUriToFileUseCase(uri, contentResolver)
+                )
+            }
         }
     }
 

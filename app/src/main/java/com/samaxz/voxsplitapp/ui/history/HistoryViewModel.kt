@@ -6,9 +6,11 @@ import com.samaxz.voxsplitapp.domain.model.HistoryInfo
 import com.samaxz.voxsplitapp.domain.usecase.DeleteHistoryUseCase
 import com.samaxz.voxsplitapp.domain.usecase.GetHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,29 +28,35 @@ class HistoryViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _isLoading.value = true
-            val result = getHistoryUseCase()
-            _history.value = result
-            _isLoading.value = false
+            val data = withContext(Dispatchers.IO) {
+                _isLoading.value = true
+                val result = getHistoryUseCase()
+                _history.value = result
+                _isLoading.value = false
+            }
         }
     }
 
     fun updateList() {
         viewModelScope.launch {
-            _isLoading.value = true
-            val result = getHistoryUseCase()
-            _history.value = result
-            _isLoading.value = false
+            val data = withContext(Dispatchers.IO) {
+                _isLoading.value = true
+                val result = getHistoryUseCase()
+                _history.value = result
+                _isLoading.value = false
+            }
         }
     }
 
     fun deleteHistory() {
         viewModelScope.launch {
-            _isLoading.value = true
-            deleteHistoryUseCase()
-            val result = getHistoryUseCase()
-            _history.value = result
-            _isLoading.value = false
+            val data = withContext(Dispatchers.IO) {
+                _isLoading.value = true
+                deleteHistoryUseCase()
+                val result = getHistoryUseCase()
+                _history.value = result
+                _isLoading.value = false
+            }
         }
     }
 }
