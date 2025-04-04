@@ -7,6 +7,7 @@ import com.samaxz.voxsplitapp.data.network.ResultService
 import com.samaxz.voxsplitapp.domain.model.HistoryInfo
 import com.samaxz.voxsplitapp.domain.model.ResultInfo
 import com.samaxz.voxsplitapp.domain.model.toDomain
+import java.io.File
 import javax.inject.Inject
 import kotlin.collections.map
 
@@ -14,8 +15,12 @@ class APIDBRepository @Inject constructor(
     private val api: ResultService,
     private val historyDao: HistoryDao
 ) {
-    suspend fun getResultFromApi(): ResultInfo? {
-        val response: ResultModel? = api.getResult()
+    suspend fun getResultFromApi(
+        speakers: Int,
+        language: String,
+        file: File
+    ): ResultInfo? {
+        val response: ResultModel? = api.getResult(speakers, language, file)
         return response?.toDomain()
     }
 

@@ -1,7 +1,6 @@
 package com.samaxz.voxsplitapp.ui.detail
 
 import android.app.Dialog
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.SeekBar
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -30,12 +28,10 @@ class DetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args: DetailFragmentArgs by navArgs()
-
     private var duration: Int? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initUI()
     }
 
@@ -55,8 +51,13 @@ class DetailFragment : Fragment() {
             detailViewModel.pauseAudio()
         }
 
+        val uriString = args.file
+        val speakers = args.speakers
+
+        val fileUri: Uri = Uri.parse(uriString)
+
         binding.btnSendRequest.setOnClickListener {
-            detailViewModel.getResult()
+            detailViewModel.getResult(fileUri, speakers, requireContext().contentResolver)
         }
     }
 
@@ -101,7 +102,6 @@ class DetailFragment : Fragment() {
                             duration = mediaPlayer.duration
                             binding.seekBar.max = mediaPlayer.duration
 
-
                             binding.seekBar.setOnSeekBarChangeListener(object :
                                 SeekBar.OnSeekBarChangeListener {
                                 override fun onProgressChanged(
@@ -140,7 +140,9 @@ class DetailFragment : Fragment() {
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     detailViewModel.result.collect { result ->
-                        Log.i("SUPERSAMA", result.toString())
+                        if (result != null) {
+                            Log.i("SUPERSAMA", result.toString())
+                        }
                     }
                 }
             }
