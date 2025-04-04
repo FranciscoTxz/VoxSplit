@@ -17,7 +17,8 @@ class ResultService @Inject constructor(private val api: ResultApiClient) {
             try {
                 val requestFile = RequestBody.create(MediaType.parse("audio/*"), file)
                 val filePart = MultipartBody.Part.createFormData("file", file.name, requestFile)
-                val response = api.getSuperResult(intParam = speakers, stringParam = language, file = filePart)
+                // val response = api.getSuperResult(intParam = speakers, stringParam = language, file = filePart)
+                val response = api.getSuperResult(intParam = speakers, stringParam = language)
                 Log.i("SUPERSAMA", "Raw Response: $response")
                 response.body()
             } catch (e: Exception) {

@@ -9,11 +9,11 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface ResultApiClient {
-    @Multipart
+    // @Multipart
     @POST("/process")
     suspend fun getSuperResult(
         @Header("speakers") intParam: Int,
         @Header("language") stringParam: String,
-        @Part file: MultipartBody.Part
+        //@Part file: MultipartBody.Part
     ): Response<ResultModel>
 }
