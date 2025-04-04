@@ -76,7 +76,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun initializeAudio(showDialog: () -> Unit) {
+    fun initializeAudio() {
         try {
             if (_mediaPlayer.value == null) {
                 _mediaPlayer.value = MediaPlayer().apply {
@@ -89,7 +89,6 @@ class DetailViewModel @Inject constructor(
         } catch (e: Exception) {
             _allCool.value = false
             _mediaPlayer.value?.release()
-            showDialog()
         }
     }
 

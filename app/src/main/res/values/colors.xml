@@ -13,8 +13,9 @@
     <color name="button">#FFFFFF</color>
     <color name="button_2">#3168EA</color>
     <color name="button_text">#3072B6</color>
-    <color name="button_click_welcome">#3168EA</color>
+    <color name="button_click_welcome">#4366B1</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="notEnable">#767676</color>
 
     <!--Text-->
     <color name="text_color">#FFFFFFFF</color>

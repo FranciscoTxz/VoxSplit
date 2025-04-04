@@ -1,24 +1,23 @@
 package com.samaxz.voxsplitapp.ui.detail
 
-import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.SeekBar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import com.samaxz.voxsplitapp.databinding.DialogErrorBinding
 import com.samaxz.voxsplitapp.databinding.FragmentDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -30,36 +29,52 @@ class DetailFragment : Fragment() {
     private val args: DetailFragmentArgs by navArgs()
     private var duration: Int? = null
 
+    private lateinit var fileName: String
+    private lateinit var fileSize: String
+    private lateinit var fileDuration: String
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
     }
 
     private fun initUI() {
+        initTV()
         initUIState()
         initUiListeners()
+    }
+
+    private fun initTV() {
+        val language = args.language
+        val speakers = args.speakers
+        binding.tvSpeakers.text = "S: $speakers"
+        binding.tvLanguage.text = "L: ${language.uppercase()}"
     }
 
     private fun initUiListeners() {
         binding.playButton.setOnClickListener {
             // play
             detailViewModel.playAudio()
+            binding.playButton.isVisible = false
+            binding.pauseButton.isVisible = true
         }
 
         binding.pauseButton.setOnClickListener {
             // pause
             detailViewModel.pauseAudio()
+            binding.pauseButton.isVisible = false
+            binding.playButton.isVisible = true
         }
 
-        val uriString = args.file
-        val language = args.language
-        val speakers = args.speakers
-
-        val fileUri: Uri = Uri.parse(uriString)
-
-        binding.btnSendRequest.setOnClickListener {
-            detailViewModel.getResult(fileUri, speakers, language, requireContext().contentResolver)
-        }
+//        val uriString = args.file
+//        val language = args.language
+//        val speakers = args.speakers
+//
+//        val fileUri: Uri = Uri.parse(uriString)
+//
+//        binding.btnSendRequest.setOnClickListener {
+//            detailViewModel.getResult(fileUri, speakers, language, requireContext().contentResolver)
+//        }
     }
 
     private fun initUIState() {
@@ -68,13 +83,13 @@ class DetailFragment : Fragment() {
 
         val fileUri: Uri = Uri.parse(uriString)
 
-        binding.tvSpeakers.text = "Speakers: $speakers"
+        binding.tvSpeakers.text = "S: $speakers"
 
         try {
             // Upload File
             detailViewModel.setAudioFile(fileUri, requireContext().contentResolver)
             //Init Media Player
-            detailViewModel.initializeAudio { showDialog() }
+            detailViewModel.initializeAudio()
 
             //Update components whit File
             lifecycleScope.launch {
@@ -84,6 +99,23 @@ class DetailFragment : Fragment() {
                             binding.playButton.isEnabled = false
                             binding.pauseButton.isEnabled = false
                             binding.seekBar.isEnabled = false
+                        } else {
+                            audioFile.let {
+                                fileName = audioFile.name
+                                fileDuration = String.format(
+                                    Locale.US,
+                                    "%.1f S",
+                                    (audioFile.metadataModel.duration.toFloat() / 1000)
+                                )
+                                fileSize = String.format(
+                                    Locale.US,
+                                    "%.1f MB",
+                                    (audioFile.metadataModel.size.toFloat() / (1024.0 * 1024.0))
+                                )
+                                binding.tvFileNameDetail.text = fileName
+                                binding.tvFileSizeDetail.text = fileSize
+                                binding.tvFileDurationDetail.text = fileDuration
+                            }
                         }
                     }
                 }
@@ -92,6 +124,14 @@ class DetailFragment : Fragment() {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     detailViewModel.progress.collect { progress ->
                         binding.seekBar.progress = progress
+                        binding.tvCurrentTime.text = formatTime(progress)
+                    }
+                }
+            }
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    detailViewModel.remainTime.collect { remainTime ->
+                        binding.tvRemainTime.text = formatTime(remainTime)
                     }
                 }
             }
@@ -103,6 +143,11 @@ class DetailFragment : Fragment() {
                             duration = mediaPlayer.duration
                             binding.seekBar.max = mediaPlayer.duration
 
+                            mediaPlayer.setOnCompletionListener {
+                                binding.pauseButton.isVisible = false
+                                binding.playButton.isVisible = true
+                            }
+
                             binding.seekBar.setOnSeekBarChangeListener(object :
                                 SeekBar.OnSeekBarChangeListener {
                                 override fun onProgressChanged(
@@ -112,6 +157,9 @@ class DetailFragment : Fragment() {
                                 ) {
                                     if (fromUser) {
                                         mediaPlayer.seekTo(progress)
+                                        binding.tvCurrentTime.text = formatTime(progress)
+                                        binding.tvRemainTime.text =
+                                            formatTime(mediaPlayer.duration - progress)
                                     }
                                 }
 
@@ -129,7 +177,6 @@ class DetailFragment : Fragment() {
                             binding.playButton.isEnabled = false
                             binding.pauseButton.isEnabled = false
                             binding.seekBar.isEnabled = false
-                            //Show Dialog
                         } else {
                             binding.playButton.isEnabled = true
                             binding.pauseButton.isEnabled = true
@@ -162,17 +209,10 @@ class DetailFragment : Fragment() {
         detailViewModel.cleanData()
     }
 
-    private fun showDialog() {
-        val dialog = Dialog(requireContext())
-        val bindingDialog = DialogErrorBinding.inflate(LayoutInflater.from(requireContext()))
-        dialog.setContentView(bindingDialog.root)
-
-        val btnContinue: Button = bindingDialog.btnContinue
-        btnContinue.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
+    private fun formatTime(millis: Int): CharSequence {
+        val minutes = millis / 1000 / 60
+        val seconds = (millis / 1000) % 60
+        return String.format(Locale.US, "%02d:%02d", minutes, seconds)
     }
 
     override fun onCreateView(
