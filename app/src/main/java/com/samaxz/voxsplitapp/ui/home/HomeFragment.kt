@@ -23,7 +23,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.samaxz.voxsplitapp.databinding.DialogErrorBinding
 import com.samaxz.voxsplitapp.databinding.FragmentHomeBinding
-import com.samaxz.voxsplitapp.domain.model.HistoryInfo
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -73,13 +72,6 @@ class HomeFragment : Fragment() {
         }
         binding.btnProcess.setOnClickListener {
             homeViewModel.pauseAudio()
-            // Save in ROOM
-            homeViewModel.uploadToRoom(
-                HistoryInfo(
-                    name = fileName,
-                    description = "$fileSize --- $fileDuration Text: Hellllloooowwwww world, my first DATA in ROOM"
-                )
-            )
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToAudioFragment(
                     file = uriX.toString(),

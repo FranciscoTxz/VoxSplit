@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.samaxz.voxsplitapp.databinding.FragmentDetailBinding
+import com.samaxz.voxsplitapp.domain.model.HistoryInfo
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -80,7 +81,7 @@ class DetailFragment : Fragment() {
     private fun initUIState() {
         val uriString = args.file
         val speakers = args.speakers
-
+        val language = args.language
         val fileUri: Uri = Uri.parse(uriString)
 
         binding.tvSpeakers.text = "S: $speakers"
@@ -115,6 +116,15 @@ class DetailFragment : Fragment() {
                                 binding.tvFileNameDetail.text = fileName
                                 binding.tvFileSizeDetail.text = fileSize
                                 binding.tvFileDurationDetail.text = fileDuration
+                                saveInRoom(
+                                    name = fileName,
+                                    uri = uriString,
+                                    speakers = "S: $speakers",
+                                    language = "L: $language",
+                                    size = fileSize,
+                                    time = fileDuration,
+                                    description = "Hola como estas amigo mio, espero que estes muy bien. Gracias por tu tiempo.",
+                                )
                             }
                         }
                     }
@@ -201,8 +211,31 @@ class DetailFragment : Fragment() {
             binding.pauseButton.isEnabled = false
             binding.seekBar.isEnabled = false
         }
-
     }
+
+    private fun saveInRoom(
+        name: String,
+        uri: String,
+        speakers: String,
+        language: String,
+        size: String,
+        time: String,
+        description: String
+    ) {
+        // Save in ROOM
+        detailViewModel.uploadToRoom(
+            HistoryInfo(
+                name = name,
+                uri = uri,
+                speakers = speakers,
+                language = language,
+                size = size,
+                time = time,
+                description = description
+            )
+        )
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

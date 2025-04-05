@@ -24,8 +24,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getAudioMetadataUseCase: GetAudioMetadataUseCase,
     private val convertUriToFileUseCase: ConvertUriToFileUseCase,
-    private val getAudioNameUseCase: GetAudioNameUseCase,
-    private val postNewHistory: PostNewHistoryUseCase
+    private val getAudioNameUseCase: GetAudioNameUseCase
 ) : ViewModel() {
 
     private var _audioFile = MutableStateFlow<AudioFileModel?>(null)
@@ -42,14 +41,6 @@ class HomeViewModel @Inject constructor(
 
     private var _mediaPlayer = MutableStateFlow<MediaPlayer?>(null)
     val mediaPlayer: StateFlow<MediaPlayer?> = _mediaPlayer
-
-    fun uploadToRoom(historyInfo: HistoryInfo) {
-        viewModelScope.launch {
-            val data = withContext(Dispatchers.IO) {
-                postNewHistory(historyInfo)
-            }
-        }
-    }
 
     fun cleanData() {
         _allCool.value = true
