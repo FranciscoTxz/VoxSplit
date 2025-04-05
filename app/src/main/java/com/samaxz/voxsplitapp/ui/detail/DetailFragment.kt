@@ -225,13 +225,14 @@ class DetailFragment : Fragment() {
         // Save in ROOM
         detailViewModel.uploadToRoom(
             HistoryInfo(
+                id = null,
                 name = name,
                 uri = uri,
                 speakers = speakers,
                 language = language,
                 size = size,
                 time = time,
-                description = description
+                description = description,
             )
         )
     }

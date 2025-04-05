@@ -45,7 +45,7 @@ class HistoryFragment : Fragment() {
 
     private fun initList() {
         historyAdapter = HistoryAdapter(onItemSelected = {
-            Log.i("SUPERSAMA", it.name)
+            Log.i("SUPERSAMA", it.toString())
         })
         binding.rvHistory.apply {
             layoutManager = LinearLayoutManager(requireContext())
