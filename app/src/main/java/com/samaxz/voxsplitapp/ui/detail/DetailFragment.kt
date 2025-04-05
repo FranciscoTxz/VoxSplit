@@ -106,15 +106,6 @@ class DetailFragment : Fragment() {
                                 binding.tvFileNameDetail.text = fileName
                                 binding.tvFileSizeDetail.text = fileSize
                                 binding.tvFileDurationDetail.text = fileDuration
-                                saveInRoom(
-                                    name = fileName,
-                                    uri = uriString,
-                                    speakers = "S: $speakers",
-                                    language = "L: $language",
-                                    size = fileSize,
-                                    time = fileDuration,
-                                    description = "Hola como estas amigo mio, espero que estes muy bien. Gracias por tu tiempo.",
-                                )
                             }
                         }
                     }
@@ -189,7 +180,17 @@ class DetailFragment : Fragment() {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     detailViewModel.result.collect { result ->
                         if (result != null) {
+                            // Put Loadings
                             Log.i("SUPERSAMA", result.toString())
+                            saveInRoom(
+                                name = fileName,
+                                uri = uriString,
+                                speakers = "S: $speakers",
+                                language = "L: $language",
+                                size = fileSize,
+                                time = fileDuration,
+                                description = result.text,
+                            )
                         }
                     }
                 }
