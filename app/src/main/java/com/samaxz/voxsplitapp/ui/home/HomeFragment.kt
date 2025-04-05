@@ -254,6 +254,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        homeViewModel.pauseAudio()
         homeViewModel.cleanData()
     }
 

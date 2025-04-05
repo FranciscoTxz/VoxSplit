@@ -66,16 +66,6 @@ class DetailFragment : Fragment() {
             binding.pauseButton.isVisible = false
             binding.playButton.isVisible = true
         }
-
-//        val uriString = args.file
-//        val language = args.language
-//        val speakers = args.speakers
-//
-//        val fileUri: Uri = Uri.parse(uriString)
-//
-//        binding.btnSendRequest.setOnClickListener {
-//            detailViewModel.getResult(fileUri, speakers, language, requireContext().contentResolver)
-//        }
     }
 
     private fun initUIState() {
@@ -240,6 +230,7 @@ class DetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        detailViewModel.pauseAudio()
         detailViewModel.cleanData()
     }
 
@@ -253,6 +244,15 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Request
+        val uriString = args.file
+        val language = args.language
+        val speakers = args.speakers
+
+        val fileUri: Uri = Uri.parse(uriString)
+
+        detailViewModel.getResult(fileUri, speakers, language, requireContext().contentResolver)
+
         _binding = FragmentDetailBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

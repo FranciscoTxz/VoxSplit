@@ -3,6 +3,7 @@ package com.samaxz.voxsplitapp.ui.detail
 import android.content.ContentResolver
 import android.media.MediaPlayer
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samaxz.voxsplitapp.domain.model.AudioFileModel
@@ -38,7 +39,10 @@ class DetailViewModel @Inject constructor(
     val allCool: StateFlow<Boolean> = _allCool
 
     private var _saved = MutableStateFlow<Boolean>(false)
-    val saved: StateFlow<Boolean> = _allCool
+    val saved: StateFlow<Boolean> = _saved
+
+    private var _called = MutableStateFlow<Boolean>(false)
+    val called: StateFlow<Boolean> = _called
 
     private var _progress = MutableStateFlow<Int>(0)
     val progress: StateFlow<Int> = _progress
@@ -54,14 +58,17 @@ class DetailViewModel @Inject constructor(
 
 
     fun getResult(uri: Uri, speakers: Int, language: String, contentResolver: ContentResolver) {
-        viewModelScope.launch {
-            val data = withContext(Dispatchers.IO) {
-                _result.value = postResultUseCase(
-                    speakers = speakers,
-                    language = language,
-                    file = convertUriToFileUseCase(uri, contentResolver)
-                )
+        if (!_called.value) {
+            viewModelScope.launch {
+                val data = withContext(Dispatchers.IO) {
+                    _result.value = postResultUseCase(
+                        speakers = speakers,
+                        language = language,
+                        file = convertUriToFileUseCase(uri, contentResolver)
+                    )
+                }
             }
+            _called.value = true
         }
     }
 
@@ -82,7 +89,6 @@ class DetailViewModel @Inject constructor(
         _progress.value = 0
         _remainTime.value = 0
         _mediaPlayer.value = null
-        _saved.value = false
     }
 
     fun setAudioFile(uri: Uri, contentResolver: ContentResolver) {
