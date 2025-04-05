@@ -17,14 +17,15 @@ data class SegmentD(
     val text: String,
     val words: List<WordD>,
     val prob: List<String>,
-    val overlapp: Boolean? = null
+    val overlapp: String
 )
 
 data class WordD(
     val word: String,
     val start: Double,
     val end: Double,
-    val speaker: String
+    val speaker: String,
+    val overlapp: Boolean? = null
 )
 
 fun ResultModel.toDomain() = ResultInfo(
@@ -47,5 +48,6 @@ fun Word.toDomain() = WordD(
     word = this.word,
     start = this.start,
     end = this.end,
-    speaker = this.speaker
+    speaker = this.speaker,
+    overlapp = this.overlapp
 )

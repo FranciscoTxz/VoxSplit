@@ -14,8 +14,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.samaxz.voxsplitapp.databinding.FragmentDetailBinding
 import com.samaxz.voxsplitapp.domain.model.HistoryInfo
+import com.samaxz.voxsplitapp.ui.detail.adapter.DetailAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -24,6 +26,8 @@ import java.util.Locale
 class DetailFragment : Fragment() {
 
     private val detailViewModel by viewModels<DetailViewModel>()
+    private lateinit var detailAdapter: DetailAdapter
+
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -43,6 +47,20 @@ class DetailFragment : Fragment() {
         initTV()
         initUIState()
         initUiListeners()
+        initList()
+    }
+
+    private fun initList() {
+        detailAdapter = DetailAdapter(
+            onItemSelected =
+                {
+                    Log.i("SUPERSAMA", it.toString())
+                }
+        )
+        binding.rvResult.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = detailAdapter
+        }
     }
 
     private fun initTV() {
@@ -182,6 +200,15 @@ class DetailFragment : Fragment() {
                         if (result != null) {
                             // Put Loadings
                             Log.i("SUPERSAMA", result.toString())
+                            // Update UI
+                            binding.pbLoadingDetail.isVisible = false
+                            binding.cvMediaPLayer.isVisible = true
+                            binding.svResult.isVisible = true
+                            binding.tvTranscription.text = result.text
+
+                            // Update RV
+                            detailAdapter.updateList(result.segments)
+
                             saveInRoom(
                                 name = fileName,
                                 uri = uriString,

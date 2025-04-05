@@ -15,12 +15,13 @@ data class Segment(
     @SerializedName("text") val text: String,
     @SerializedName("words") val words: List<Word>,
     @SerializedName("prob") val prob: List<String>,
-    @SerializedName("overlapp") val overlapp: Boolean? = null
+    @SerializedName("overlapp") val overlapp: String
 )
 
 data class Word(
     @SerializedName("word") val word: String,
     @SerializedName("start") val start: Double,
     @SerializedName("end") val end: Double,
-    @SerializedName("speaker") val speaker: String
+    @SerializedName("speaker") val speaker: String,
+    @SerializedName("overlapp") val overlapp: Boolean? = null
 )
