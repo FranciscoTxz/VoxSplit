@@ -83,6 +83,12 @@ class DetailViewModel @Inject constructor(
         }
     }
 
+    fun goToTime(timeS: Double) {
+        if (_allCool.value == true && _mediaPlayer.value != null) {
+            _mediaPlayer.value!!.seekTo((timeS * 1000).toInt())
+        }
+    }
+
     fun cleanData() {
         _allCool.value = true
         _audioFile.value = null

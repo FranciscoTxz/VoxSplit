@@ -54,7 +54,7 @@ class DetailFragment : Fragment() {
         detailAdapter = DetailAdapter(
             onItemSelected =
                 {
-                    Log.i("SUPERSAMA", it.toString())
+                    detailViewModel.goToTime(it.start)
                 }
         )
         binding.rvResult.apply {
