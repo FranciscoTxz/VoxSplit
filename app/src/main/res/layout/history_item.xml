@@ -14,6 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent"
         android:paddingHorizontal="30dp"
         android:paddingVertical="10dp">
@@ -38,6 +39,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/rubik"
             android:justificationMode="inter_word"
+            android:textColor="@color/black"
             android:maxLines="2"
             android:padding="5dp"
             android:textAlignment="viewStart"
