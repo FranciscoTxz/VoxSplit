@@ -1,5 +1,8 @@
 package com.samaxz.voxsplitapp.domain.model
 
+import com.samaxz.voxsplitapp.data.database.entities.ResultEntity
+import com.samaxz.voxsplitapp.data.database.entities.SegmentE
+import com.samaxz.voxsplitapp.data.database.entities.WordE
 import com.samaxz.voxsplitapp.data.model.ResultModel
 import com.samaxz.voxsplitapp.data.model.Segment
 import com.samaxz.voxsplitapp.data.model.Word
@@ -51,3 +54,28 @@ fun Word.toDomain() = WordD(
     speaker = this.speaker,
     overlapp = this.overlapp
 )
+
+fun ResultEntity.toDomain() = ResultInfo(
+    text = this.text,
+    segments = this.segments.map { it.toDomain() },
+    language = this.language
+)
+
+fun SegmentE.toDomain() = SegmentD(
+    id = this.id,
+    start = this.start,
+    end = this.end,
+    text = this.text,
+    words = this.words.map { it.toDomain() },
+    prob = this.prob,
+    overlapp = this.overlapp
+)
+
+fun WordE.toDomain() = WordD(
+    word = this.word,
+    start = this.start,
+    end = this.end,
+    speaker = this.speaker,
+    overlapp = this.overlapp
+)
+

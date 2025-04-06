@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.samaxz.voxsplitapp.domain.model.HistoryInfo
-import com.samaxz.voxsplitapp.domain.model.ResultInfo
 
 @Entity(tableName = "history_table")
 data class HistoryEntity(
@@ -17,7 +16,7 @@ data class HistoryEntity(
     @ColumnInfo(name = "size") val size: String,
     @ColumnInfo(name = "time") val time: String,
     @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "result") val result: ResultInfo
+    @ColumnInfo(name = "result") val result: ResultEntity
 )
 
 fun HistoryInfo.toDatabase() =
@@ -29,6 +28,6 @@ fun HistoryInfo.toDatabase() =
         size = size,
         time = time,
         description = description,
-        result = result
+        result = result.toDatabase()
     )
 

@@ -24,5 +24,5 @@ fun HistoryEntity.toDomain() =
         size = size,
         time = time,
         description = description,
-        result = result
+        result = result.toDomain()
     )
