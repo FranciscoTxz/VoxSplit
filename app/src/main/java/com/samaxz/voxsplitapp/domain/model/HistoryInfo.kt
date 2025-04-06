@@ -10,7 +10,8 @@ data class HistoryInfo(
     val language: String,
     val size: String,
     val time: String,
-    val description: String
+    val description: String,
+    val result: ResultInfo
 )
 
 fun HistoryEntity.toDomain() =
@@ -22,5 +23,6 @@ fun HistoryEntity.toDomain() =
         language = language,
         size = size,
         time = time,
-        description = description
+        description = description,
+        result = result
     )

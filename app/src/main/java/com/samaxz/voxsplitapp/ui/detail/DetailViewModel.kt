@@ -95,6 +95,7 @@ class DetailViewModel @Inject constructor(
         _progress.value = 0
         _remainTime.value = 0
         _mediaPlayer.value = null
+        // _mediaPlayer.value?.release()
     }
 
     fun setAudioFile(uri: Uri, contentResolver: ContentResolver) {

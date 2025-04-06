@@ -17,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.samaxz.voxsplitapp.databinding.FragmentDetailBinding
 import com.samaxz.voxsplitapp.domain.model.HistoryInfo
+import com.samaxz.voxsplitapp.domain.model.ResultInfo
 import com.samaxz.voxsplitapp.ui.detail.adapter.DetailAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -217,6 +218,7 @@ class DetailFragment : Fragment() {
                                 size = fileSize,
                                 time = fileDuration,
                                 description = result.text,
+                                result = result
                             )
                         }
                     }
@@ -238,7 +240,8 @@ class DetailFragment : Fragment() {
         language: String,
         size: String,
         time: String,
-        description: String
+        description: String,
+        result: ResultInfo
     ) {
         // Save in ROOM
         detailViewModel.uploadToRoom(
@@ -251,6 +254,7 @@ class DetailFragment : Fragment() {
                 size = size,
                 time = time,
                 description = description,
+                result = result
             )
         )
     }
@@ -258,7 +262,7 @@ class DetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        detailViewModel.pauseAudio()
+        detailViewModel.pauseAudio() // Error TODO FIX
         detailViewModel.cleanData()
     }
 
