@@ -28,7 +28,7 @@ class HistoryViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val data = withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
                 _isLoading.value = true
                 val result = getHistoryUseCase()
                 _history.value = result
@@ -39,7 +39,7 @@ class HistoryViewModel @Inject constructor(
 
     fun updateList() {
         viewModelScope.launch {
-            val data = withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
                 _isLoading.value = true
                 val result = getHistoryUseCase()
                 _history.value = result
@@ -50,7 +50,7 @@ class HistoryViewModel @Inject constructor(
 
     fun deleteHistory() {
         viewModelScope.launch {
-            val data = withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
                 _isLoading.value = true
                 deleteHistoryUseCase()
                 val result = getHistoryUseCase()

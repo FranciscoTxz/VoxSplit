@@ -6,18 +6,14 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samaxz.voxsplitapp.domain.model.AudioFileModel
-import com.samaxz.voxsplitapp.domain.model.HistoryInfo
 import com.samaxz.voxsplitapp.domain.usecase.ConvertUriToFileUseCase
 import com.samaxz.voxsplitapp.domain.usecase.GetAudioMetadataUseCase
 import com.samaxz.voxsplitapp.domain.usecase.GetAudioNameUseCase
-import com.samaxz.voxsplitapp.domain.usecase.PostNewHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel

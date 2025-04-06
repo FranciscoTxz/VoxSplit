@@ -3,7 +3,6 @@ package com.samaxz.voxsplitapp.ui.detail
 import android.content.ContentResolver
 import android.media.MediaPlayer
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samaxz.voxsplitapp.domain.model.AudioFileModel
@@ -39,10 +38,8 @@ class DetailViewModel @Inject constructor(
     val allCool: StateFlow<Boolean> = _allCool
 
     private var _saved = MutableStateFlow<Boolean>(false)
-    val saved: StateFlow<Boolean> = _saved
 
     private var _called = MutableStateFlow<Boolean>(false)
-    val called: StateFlow<Boolean> = _called
 
     private var _progress = MutableStateFlow<Int>(0)
     val progress: StateFlow<Int> = _progress
@@ -60,7 +57,7 @@ class DetailViewModel @Inject constructor(
     fun getResult(uri: Uri, speakers: Int, language: String, contentResolver: ContentResolver) {
         if (!_called.value) {
             viewModelScope.launch {
-                val data = withContext(Dispatchers.IO) {
+                withContext(Dispatchers.IO) {
                     _result.value = postResultUseCase(
                         speakers = speakers,
                         language = language,
@@ -75,7 +72,7 @@ class DetailViewModel @Inject constructor(
     fun uploadToRoom(historyInfo: HistoryInfo) {
         if (!_saved.value) {
             viewModelScope.launch {
-                val data = withContext(Dispatchers.IO) {
+                withContext(Dispatchers.IO) {
                     postNewHistory(historyInfo)
                 }
             }
@@ -94,8 +91,8 @@ class DetailViewModel @Inject constructor(
         _audioFile.value = null
         _progress.value = 0
         _remainTime.value = 0
+        _mediaPlayer.value?.release()
         _mediaPlayer.value = null
-        // _mediaPlayer.value?.release()
     }
 
     fun setAudioFile(uri: Uri, contentResolver: ContentResolver) {
@@ -139,7 +136,7 @@ class DetailViewModel @Inject constructor(
     }
 
     fun pauseAudio() {
-        if (_allCool.value) {
+        if (_allCool.value && _mediaPlayer.value?.isPlaying == true) {
             _mediaPlayer.value?.pause()
         }
     }
