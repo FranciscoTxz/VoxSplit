@@ -86,6 +86,8 @@ class DetailHistoryFragment : Fragment() {
                         binding.cvMediaPLayer.isVisible = true
                         binding.svResult.isVisible = true
                         binding.tvTranscription.text = historyResult.result.text
+                        binding.tvLanguage.text = historyResult.language.uppercase()
+                        binding.tvSpeakers.text = historyResult.speakers.uppercase()
 
                         val fileUri: Uri = Uri.parse(historyResult.uri)
                         detailHistoryViewModel.setAudioFile(

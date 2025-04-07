@@ -1,8 +1,10 @@
 package com.samaxz.voxsplitapp.ui.detail
 
 import android.content.ContentResolver
+import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samaxz.voxsplitapp.domain.model.AudioFileModel
@@ -20,6 +22,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,6 +56,9 @@ class DetailViewModel @Inject constructor(
 
     private var _result = MutableStateFlow<ResultInfo?>(null)
     val result: StateFlow<ResultInfo?> = _result
+
+    private var _uriX = MutableStateFlow<Uri?>(null)
+    val uriX: StateFlow<Uri?> = _uriX
 
 
     fun getResult(uri: Uri, speakers: Int, language: String, contentResolver: ContentResolver) {
@@ -95,12 +102,27 @@ class DetailViewModel @Inject constructor(
         _mediaPlayer.value = null
     }
 
-    fun setAudioFile(uri: Uri, contentResolver: ContentResolver) {
+    fun setAudioFile(uri: Uri, context: Context) {
         _mediaPlayer.value?.release()
         viewModelScope.launch {
-            val file = convertUriToFileUseCase(uri, contentResolver)
-            val name = getAudioNameUseCase(uri, contentResolver)
-            val metadata = getAudioMetadataUseCase(uri, contentResolver)
+            val file = convertUriToFileUseCase(uri, context.contentResolver)
+            val name = getAudioNameUseCase(uri, context.contentResolver)
+            val metadata = getAudioMetadataUseCase(uri, context.contentResolver)
+            _uriX.value = try {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                val outputFile = File(context.filesDir, name)
+                val outputStream = FileOutputStream(outputFile)
+
+                inputStream?.copyTo(outputStream)
+
+                inputStream?.close()
+                outputStream.close()
+
+                Uri.fromFile(outputFile)
+            } catch (e: Exception) {
+                Log.i("SUPERSAMA", "ERROR COPYING AUDIO")
+                null
+            }
             _audioFile.value = AudioFileModel(file, name, metadata)
         }
     }

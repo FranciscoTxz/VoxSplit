@@ -89,14 +89,15 @@ class DetailFragment : Fragment() {
     }
 
     private fun initUIState() {
-        val uriString = args.file
         val speakers = args.speakers
         val language = args.language
-        val fileUri: Uri = Uri.parse(uriString)
+        val fileUri: Uri = Uri.parse(args.file)
+
+        var uriX: Uri = fileUri
 
         try {
             // Upload File
-            detailViewModel.setAudioFile(fileUri, requireContext().contentResolver)
+            detailViewModel.setAudioFile(fileUri, requireContext())
             //Init Media Player
             detailViewModel.initializeAudio()
             //Update components whit File
@@ -133,6 +134,15 @@ class DetailFragment : Fragment() {
                     detailViewModel.progress.collect { progress ->
                         binding.seekBar.progress = progress
                         binding.tvCurrentTime.text = formatTime(progress)
+                    }
+                }
+            }
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    detailViewModel.uriX.collect { uri ->
+                        if (uri != null){
+                            uriX = uri
+                        }
                     }
                 }
             }
@@ -210,7 +220,7 @@ class DetailFragment : Fragment() {
 
                             saveInRoom(
                                 name = fileName,
-                                uri = uriString,
+                                uri = uriX.toString(),
                                 speakers = "S: $speakers",
                                 language = "L: $language",
                                 size = fileSize,
@@ -275,11 +285,10 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Request
-        val uriString = args.file
         val language = args.language
         val speakers = args.speakers
 
-        val fileUri: Uri = Uri.parse(uriString)
+        val fileUri: Uri = Uri.parse(args.file)
 
         detailViewModel.getResult(fileUri, speakers, language, requireContext().contentResolver)
 
