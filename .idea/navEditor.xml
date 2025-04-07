@@ -20,13 +20,25 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="detailHistoryFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="495" />
+                            <option name="y" value="367" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="historyFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="499" />
-                            <option name="y" value="360" />
+                            <option name="x" value="262" />
+                            <option name="y" value="329" />
                           </Point>
                         </option>
                       </LayoutPositions>

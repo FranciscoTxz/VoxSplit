@@ -12,6 +12,8 @@ interface HistoryDao {
     @Query("SELECT * FROM history_table ORDER BY id DESC ")
     suspend fun getAllHistory(): List<HistoryEntity>
 
+    @Query("SELECT * FROM history_table WHERE id = :historyId LIMIT 1")
+    suspend fun getHistoryById(historyId: Int): HistoryEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOne(history: HistoryEntity)

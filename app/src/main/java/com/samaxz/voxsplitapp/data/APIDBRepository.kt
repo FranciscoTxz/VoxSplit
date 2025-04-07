@@ -1,5 +1,6 @@
 package com.samaxz.voxsplitapp.data
 
+import android.util.Log
 import com.samaxz.voxsplitapp.data.database.dao.HistoryDao
 import com.samaxz.voxsplitapp.data.database.entities.HistoryEntity
 import com.samaxz.voxsplitapp.data.model.ResultModel
@@ -29,6 +30,10 @@ class APIDBRepository @Inject constructor(
         return response.map { it.toDomain() }
     }
 
+    suspend fun getOneHistoryFromDataBase(id: Int): HistoryInfo? {
+        val response = historyDao.getHistoryById(id)?.toDomain()
+        return response
+    }
 
     suspend fun insertOneHistory(history: HistoryEntity) {
         historyDao.insertOne(history)

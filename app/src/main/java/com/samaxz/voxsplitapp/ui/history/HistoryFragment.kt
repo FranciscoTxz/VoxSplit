@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.samaxz.voxsplitapp.databinding.FragmentHistoryBinding
 import com.samaxz.voxsplitapp.ui.history.adapter.HistoryAdapter
@@ -46,6 +47,9 @@ class HistoryFragment : Fragment() {
     private fun initList() {
         historyAdapter = HistoryAdapter(onItemSelected = {
             Log.i("SUPERSAMA", it.toString())
+            findNavController().navigate(
+                HistoryFragmentDirections.actionHistoryFragmentToDetailHistoryFragment(id = it.id!!)
+            )
         })
         binding.rvHistory.apply {
             layoutManager = LinearLayoutManager(requireContext())

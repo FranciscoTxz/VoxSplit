@@ -22,23 +22,36 @@
         android:id="@+id/detailFragment"
         android:name="com.samaxz.voxsplitapp.ui.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="file"
-            app:argType="string"
-            android:defaultValue="---" />
+            android:defaultValue="---"
+            app:argType="string" />
         <argument
             android:name="speakers"
-            app:argType="integer"
-            android:defaultValue="2" />
+            android:defaultValue="2"
+            app:argType="integer" />
         <argument
             android:name="language"
-            app:argType="string"
-            android:defaultValue="en" />
+            android:defaultValue="en"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.samaxz.voxsplitapp.ui.history.HistoryFragment"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_historyFragment_to_detailHistoryFragment"
+            app:destination="@id/detailHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailHistoryFragment"
+        android:name="com.samaxz.voxsplitapp.ui.detailhistory.DetailHistoryFragment"
+        android:label="DetailHistoryFragment"
+        tools:layout="@layout/fragment_detail_history">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

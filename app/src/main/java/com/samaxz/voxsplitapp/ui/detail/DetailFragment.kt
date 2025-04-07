@@ -69,6 +69,7 @@ class DetailFragment : Fragment() {
         val speakers = args.speakers
         binding.tvSpeakers.text = "S: $speakers"
         binding.tvLanguage.text = "L: ${language.uppercase()}"
+        binding.tvSpeakers.text = "S: $speakers"
     }
 
     private fun initUiListeners() {
@@ -93,14 +94,11 @@ class DetailFragment : Fragment() {
         val language = args.language
         val fileUri: Uri = Uri.parse(uriString)
 
-        binding.tvSpeakers.text = "S: $speakers"
-
         try {
             // Upload File
             detailViewModel.setAudioFile(fileUri, requireContext().contentResolver)
             //Init Media Player
             detailViewModel.initializeAudio()
-
             //Update components whit File
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -262,7 +260,7 @@ class DetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        detailViewModel.pauseAudio() // Error TODO FIX
+        detailViewModel.pauseAudio()
         detailViewModel.cleanData()
     }
 
