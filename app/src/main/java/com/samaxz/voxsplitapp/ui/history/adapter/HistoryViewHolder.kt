@@ -13,10 +13,11 @@ class HistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.tvDescription.text = historyInfo.description
 
         binding.parent.setOnClickListener {
-            startRotationAnimation(
-                binding.parent,
-                newLambda = { onItemSelected(historyInfo) }
-            )
+//            startRotationAnimation(
+//                binding.parent,
+//                newLambda = { onItemSelected(historyInfo) }
+//            )
+            onItemSelected(historyInfo)
         }
     }
 

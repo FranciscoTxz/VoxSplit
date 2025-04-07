@@ -27,7 +27,7 @@
         app:itemActiveIndicatorStyle="@null"
         app:itemIconSize="30dp"
         app:itemIconTint="@color/bottom_nav_selector"
-        app:itemRippleColor="@color/white"
+        app:itemRippleColor="@color/item_ripple_color"
         app:itemTextAppearanceActive="@style/BottomNavTextAppearanceOn"
         app:itemTextAppearanceInactive="@style/BottomNavTextAppearanceOff"
         app:itemTextColor="@color/bottom_nav_selector"

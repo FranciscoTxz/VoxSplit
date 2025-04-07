@@ -47,7 +47,7 @@
                 android:id="@+id/btnContinue"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/button"
                 android:text="@string/dialog_continue"
                 android:textColor="@color/button_text"
                 app:cornerRadius="14dp"

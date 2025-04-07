@@ -1,4 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="my_light_primary">#3168EA</color>
+    <color name="black">#FFFFFF</color>
+    <color name="white">#FF000000</color>
+    <color name="red">#FF0000</color>
+    <color name="super_white">#FFFFFF</color>
+
+    <!--Background-->
+    <color name="my_light_primary">#043E9F</color>
+    <color name="background">#043E9F</color>
+    <color name="backgroundCard">#0C275D</color>
+
+    <!--Buttons-->
+    <color name="button">#0C275D</color>
+    <color name="button_2">#043E9F</color>
+    <color name="button_text">#FFFFFF</color>
+    <color name="button_click_welcome">#4366B1</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="notEnable">#767676</color>
+
+    <!--Text-->
+    <color name="text_color">#FFFFFFFF</color>
+    <color name="warning_text_color">#FFE100</color>
+    <color name="titles">#CACACA</color>
+    <color name="card_titles">#6485FD</color>
+
+    <!--Nav Bottom-->
+    <color name="nav_bottom_background">#0C275D</color>
+    <color name="nav_button_selected">#FFFFFF</color>
+    <color name="nav_button_not_selected">#6F99F8</color>
+    <color name="item_ripple_color">#0C275D</color>
+
+    <!--Icons-->
+    <color name="text_icon_next">#CACACA</color>
+    <color name="text_icon_trash">#FFFFFF</color>
+    <color name="file_icon">#CACACA</color>
+    <color name="progress_bar">#FFFFFF</color>
+
+
 </resources>

@@ -12,10 +12,11 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_gravity="center"
-        android:indeterminateTint="@color/white" />
+        android:indeterminateTint="@color/progress_bar" />
 
     <TextView
         android:id="@+id/tvEmptyText"
+        tools:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -23,7 +24,7 @@
         android:padding="20dp"
         android:text="@string/empty_text"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/super_white"
         android:textSize="22sp"
         android:visibility="gone" />
 
@@ -38,10 +39,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="20dp"
-        android:contentDescription="@string/x"
+        android:contentDescription="@string/trash_text"
         android:elevation="5dp"
         android:src="@drawable/ic_delete"
         app:backgroundTint="@color/red"
-        app:tint="@color/white" />
+        app:tint="@color/text_icon_trash" />
 
 </FrameLayout>
