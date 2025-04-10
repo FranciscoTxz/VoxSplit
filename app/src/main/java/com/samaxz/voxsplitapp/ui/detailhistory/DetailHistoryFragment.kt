@@ -1,11 +1,13 @@
 package com.samaxz.voxsplitapp.ui.detailhistory
 
+import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -14,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.samaxz.voxsplitapp.databinding.DialogNotFoundBinding
 import com.samaxz.voxsplitapp.databinding.FragmentDetailHistoryBinding
 import com.samaxz.voxsplitapp.ui.detailhistory.adapter.DetailHistoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -93,7 +96,7 @@ class DetailHistoryFragment : Fragment() {
                         detailHistoryViewModel.setAudioFile(
                             fileUri,
                             requireContext().contentResolver
-                        )
+                        ) { showDialog() }
 
                         //Update RV
                         detailHistoryAdapter.updateList(historyResult.result.segments)
@@ -198,6 +201,19 @@ class DetailHistoryFragment : Fragment() {
         val minutes = millis / 1000 / 60
         val seconds = (millis / 1000) % 60
         return String.format(Locale.US, "%02d:%02d", minutes, seconds)
+    }
+
+    private fun showDialog() {
+        val dialog = Dialog(requireContext())
+        val bindingDialog = DialogNotFoundBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(bindingDialog.root)
+
+        val btnContinue: Button = bindingDialog.btnContinue
+        btnContinue.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     override fun onDestroyView() {

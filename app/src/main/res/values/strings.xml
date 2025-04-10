@@ -30,6 +30,7 @@
     <string name="dialog_continue">Continue</string>
     <string name="dialog_warning">Warning</string>
     <string name="dialog_body_text">This audio does not have previous playback, it may have issues during processing.</string>
+    <string name="dialog_body_text_not_found">This audio was not found in the local database.</string>
     <string name="empty_text">Here we will show you your transcript history</string>
     <string name="transcription_word">Transcription:</string>
     <string name="speakers_text">Speakers:</string>

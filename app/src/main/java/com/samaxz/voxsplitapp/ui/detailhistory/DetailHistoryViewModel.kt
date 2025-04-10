@@ -74,7 +74,7 @@ class DetailHistoryViewModel @Inject constructor(
         _mediaPlayer.value = null
     }
 
-    fun setAudioFile(uri: Uri, contentResolver: ContentResolver) {
+    fun setAudioFile(uri: Uri, contentResolver: ContentResolver, showDialog: () -> Unit) {
         _mediaPlayer.value?.release()
         viewModelScope.launch {
             try {
@@ -87,6 +87,7 @@ class DetailHistoryViewModel @Inject constructor(
                 _audioFile.value = null
                 //Show Dialog
                 Log.i("SUPERSAMA", "the file doest exist")
+                showDialog()
             }
         }
     }
