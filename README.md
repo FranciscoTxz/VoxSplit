@@ -64,12 +64,7 @@ Turn your into text with precision and automatically separate each speaker’s v
 
 ## 🎧 Sample Audio & API Integration
 
-The app includes a sample transcription based on a demo audio file to showcase its capabilities.
-
-<audio controls>
-  <source src="audio/example.mp3" type="audio/mpeg">
-  --Your browser does not support the audio element--
-</audio>
+The app includes a sample transcription based on a [demo audio file](https://github.com/FranciscoTxz/VoxSplit/blob/develop/audio/example.mp3) to showcase its capabilities. 
 
 
 This processing is powered by an external transcription and diarization API available at:
@@ -78,6 +73,6 @@ API Repository: [https://github.com/FranciscoTxz/VoxSplitApi](https://github.com
 
 To make VoxSplit fully functional with your own API instance, you must update the Retrofit service call in the app:
 
-- Locate the Retrofit interface used for API communication (e.g., TranscriptionService.kt).
+- Locate the Retrofit interface used for API communication (NetworkModule.kt).
 - Modify the baseUrl to match your deployed API endpoint.
-- Adjust any necessary headers, request bodies, or parameters based on your server configuration.
+- Modify the comments in ResultService.kt on line 20 and lines 12 and 17 in ResultApiClient.kt
