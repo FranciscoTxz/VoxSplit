@@ -2,4 +2,39 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="super_white">#FFFFFF</color>
+
+    <!--Background-->
+    <color name="my_light_primary">#3168EA</color>
+    <color name="background">#3168EA</color>
+    <color name="backgroundCard">#FFFFFF</color>
+
+    <!--Buttons-->
+    <color name="button">#FFFFFF</color>
+    <color name="button_2">#3168EA</color>
+    <color name="button_text">#3072B6</color>
+    <color name="button_click_welcome">#4366B1</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="notEnable">#767676</color>
+
+    <!--Text-->
+    <color name="text_color">#FFFFFFFF</color>
+    <color name="warning_text_color">#FFE100</color>
+    <color name="titles">#000000</color>
+    <color name="card_titles">#3072B6</color>
+
+    <!--Nav Bottom-->
+    <color name="nav_bottom_background">#FFFFFF</color>
+    <color name="nav_button_selected">#3168EA</color>
+    <color name="nav_button_not_selected">#FF000000</color>
+    <color name="item_ripple_color">#FFFFFF</color>
+
+    <!--Icons-->
+    <color name="text_icon_next">#FFFFFf</color>
+    <color name="text_icon_trash">#FFFFFF</color>
+    <color name="file_icon">#000000</color>
+    <color name="progress_bar">#FFFFFF</color>
+
+
 </resources>

@@ -1,3 +1,38 @@
 <resources>
     <string name="app_name">VoxSplitApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="x">x</string>
+    <string name="x2">Hello blank fragment</string>
+    <string name="x3">Hello blank fragment</string>
+    <string name="x4">Hello blank fragment</string>
+    <string name="welcome_title">Welcome</string>
+    <string name="welcome_text">"Turn your conversations into text with precision and automatically separate each speaker’s voice. Whether for interviews, meetings, or personal notes, VoxSplit helps you capture every word without missing a detail."</string>
+    <string name="welcome_continue">Continue</string>
+    <string name="home_text">Select your audio file to process</string>
+    <string name="home_title">Upload File</string>
+    <string name="home_process">Process</string>
+    <string name="home_text_upload">Tap to upload a file</string>
+    <string name="file">File</string>
+    <string name="file_name_home">File Name</string>
+    <string name="file_size_home">File Size</string>
+    <string name="duration_home">Duration</string>
+    <string name="change_file_home">Change File</string>
+    <string name="empty">---</string>
+    <string name="number_of_speakers">Number of speakers and language:</string>
+    <string name="btn_play">Play Button</string>
+    <string name="btn_pause">Pause Button</string>
+    <string name="click_here_and_select_your_audio">Click here and select your audio</string>
+    <string name="file_image">File image</string>
+    <string name="persons_with_a_document">Persons with a document</string>
+    <string name="uploadAudio">Upload Audio</string>
+    <string name="history">History</string>
+    <string name="dialog_continue">Continue</string>
+    <string name="dialog_warning">Warning</string>
+    <string name="dialog_body_text">This audio does not have previous playback, it may have issues during processing.</string>
+    <string name="dialog_body_text_not_found">This audio was not found in the local database.</string>
+    <string name="empty_text">Here we will show you your transcript history</string>
+    <string name="transcription_word">Transcription:</string>
+    <string name="speakers_text">Speakers:</string>
+    <string name="trash_text">Delete history button</string>
 </resources>

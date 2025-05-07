@@ -1,1 +1,71 @@
 /build
+
+# Directorios y archivos de IntelliJ IDEA / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+build/
+.gradle/
+local.properties
+
+# Archivos de compilación de Kotlin/Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Archivos de caché y configuración
+*.log
+*.swp
+*.swo
+*.swn
+*.DS_Store
+
+# Archivos de configuración de Gradle
+.gradle/
+build/
+
+# Archivos generados por el sistema operativo
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Dependencias descargadas
+**/node_modules/
+**/.mvn/
+**/.gradle/
+
+# Archivos específicos de Android
+*.apk
+*.ap_
+*.aab
+*.dex
+*.so
+*.o
+*.obj
+*.hprof
+captures/
+.gen/
+.externalNativeBuild/
+
+# Archivos específicos de Flutter (si usas Flutter con Kotlin)
+.flutter-plugins
+.flutter-plugins-dependencies
+.dart_tool/
+.pub-cache/
+.pub/
+android/.cxx/
+
+# Claves y credenciales
+*.jks
+*.keystore
+key.properties
+google-services.json
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+
+# Configuración de VCS
+.vscode/
